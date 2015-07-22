@@ -8,9 +8,9 @@ import com.home.education.mountains.dao.impl.CategoryDaoImpl;
 public class Main {
 
 	public static void main(String[] args) throws SQLException {
-		CategoryDaoImpl categoryDao = new CategoryDaoImpl();
+		CategoryDao categoryDao = new CategoryDaoImpl();
 		//categoryDao.conn();
-		categoryDao.getById(2);
+		System.out.println(categoryDao.getById(2));
 	}
 
 }

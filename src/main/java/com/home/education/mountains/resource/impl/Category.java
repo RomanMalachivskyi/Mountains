@@ -9,8 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import antlr.StringUtils;
+
+
 @Entity
-@Table(name = "category" )
+@Table(name="Category")
 public class Category extends GenericResourceImpl implements Serializable {
 
 	private static final long serialVersionUID = -6737556781595570134L;
@@ -63,4 +66,11 @@ public class Category extends GenericResourceImpl implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	@Override
+	public String toString() {
+		
+		return "Category [id=" + id + ", name=" + name + ", description=" + description + "]";
+	}
+	
 }

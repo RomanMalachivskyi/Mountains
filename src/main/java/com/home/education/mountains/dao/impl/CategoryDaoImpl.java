@@ -21,14 +21,16 @@ public class CategoryDaoImpl implements CategoryDao {
 
 	public Category getById(int id) {
 		Session session = getSessionFactory().openSession();
-		//System.out.println(session.load(com.home.education.mountains.resource.impl.Category.class, id));
-		session.save(new Category("Captain Nemo","fdfdfd"));
+		System.out.println(Category.class.getTypeName());
+		//System.out.println(session.load(Category.class.getTypeName(), id));
+		//session.save(new Category("Captain Nemo","fdfdfd"));
 	      
-        session.getTransaction().commit();
-		//List<Category> category = session.createQuery("from com.home.education.mountains.resource.impl.Category").list();//(Category.class).list();
+        //session.getTransaction().commit();
+		List<Category> category = session.createQuery("from " + Category.class.getName()).list();//(Category.class).list();
+		Category category2 = (Category) session.load(Category.class.getTypeName(), id);
 		session.close();
-		//System.out.println("Found " + category.size() );
-		return null;
+		System.out.println("Found " + category.size() );
+		return category2;
 	}
 
 
@@ -37,12 +39,14 @@ public class CategoryDaoImpl implements CategoryDao {
 		return null;
 	}
 	public static SessionFactory getSessionFactory() {
-		Configuration configuration = new Configuration().configure();
-		StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
-				.applySettings(configuration.getProperties());
-		SessionFactory sessionFactory = configuration
-				.buildSessionFactory(builder.build());
-		return sessionFactory;
+		 try {
+	            // Create the SessionFactory from hibernate.cfg.xml
+	            return new Configuration().configure().buildSessionFactory();
+	        } catch (Throwable ex) {
+	            // Make sure you log the exception, as it might be swallowed
+	            System.err.println("Initial SessionFactory creation failed." + ex);
+	            throw new ExceptionInInitializerError(ex);
+	        }
 	}
 	public void conn() throws SQLException{
 		Connection conn = null;
