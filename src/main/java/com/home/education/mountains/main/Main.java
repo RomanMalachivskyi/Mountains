@@ -3,7 +3,9 @@ package com.home.education.mountains.main;
 import java.sql.SQLException;
 
 import com.home.education.mountains.dao.CategoryDao;
+import com.home.education.mountains.dao.LocationDao;
 import com.home.education.mountains.dao.impl.CategoryDaoImpl;
+import com.home.education.mountains.dao.impl.LocationDaoImpl;
 
 public class Main {
 
@@ -11,6 +13,10 @@ public class Main {
 		CategoryDao categoryDao = new CategoryDaoImpl();
 		//categoryDao.conn();
 		System.out.println(categoryDao.getById(2));
+		
+		LocationDao locationDao = new LocationDaoImpl();
+		//categoryDao.conn();
+		System.out.println(locationDao.getById(2));
 	}
 
 }

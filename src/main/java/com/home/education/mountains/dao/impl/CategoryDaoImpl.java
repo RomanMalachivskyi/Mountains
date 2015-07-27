@@ -21,15 +21,17 @@ public class CategoryDaoImpl implements CategoryDao {
 
 	public Category getById(int id) {
 		Session session = getSessionFactory().openSession();
-		System.out.println(Category.class.getTypeName());
 		//System.out.println(session.load(Category.class.getTypeName(), id));
 		//session.save(new Category("Captain Nemo","fdfdfd"));
 	      
         //session.getTransaction().commit();
 		List<Category> category = session.createQuery("from " + Category.class.getName()).list();//(Category.class).list();
 		Category category2 = (Category) session.load(Category.class.getTypeName(), id);
+		System.out.println(category2);
 		session.close();
+		
 		System.out.println("Found " + category.size() );
+		
 		return category2;
 	}
 
