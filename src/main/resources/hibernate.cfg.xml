@@ -14,5 +14,6 @@
    <property name="show_sql">false</property>
    <mapping class="com.home.education.mountains.resource.impl.Category"/>
    <mapping class="com.home.education.mountains.resource.impl.Location"/>
+   <mapping class="com.home.education.mountains.resource.impl.Mountain"/>
 </session-factory>
 </hibernate-configuration>

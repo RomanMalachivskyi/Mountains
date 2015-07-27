@@ -9,7 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import antlr.StringUtils;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
 
 @Entity
@@ -68,9 +71,18 @@ public class Category extends GenericResourceImpl implements Serializable {
 	}
 
 	@Override
+	public boolean equals(Object object) {
+		return EqualsBuilder.reflectionEquals(this, object);
+	}
+
+	@Override
 	public String toString() {
-		
-		return "Category [id=" + id + ", name=" + name + ", description=" + description + "]";
+		return ReflectionToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+	}
+	
+	@Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
 	}
 	
 }

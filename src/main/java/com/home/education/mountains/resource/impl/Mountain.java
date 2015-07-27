@@ -5,7 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
 @Entity
 @Table(name="Mountain")
@@ -13,7 +20,7 @@ public class Mountain extends GenericResourceImpl {
 
 	private int id;
 	private String name;
-	private int locationId;
+	private Location location;
 	private String description;
 	private int height;
 	
@@ -37,14 +44,6 @@ public class Mountain extends GenericResourceImpl {
 		this.name = name;
 	}
 	
-	public int getLocationId() {
-		return locationId;
-	}
-	
-	public void setLocationId(int locationId) {
-		this.locationId = locationId;
-	}
-	
 	@Column(name = "description")
 	public String getDescription() {
 		return description;
@@ -61,5 +60,30 @@ public class Mountain extends GenericResourceImpl {
 
 	public void setHeight(int height) {
 		this.height = height;
+	}
+
+	@ManyToOne()
+	@JoinColumn()
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+	
+	@Override
+	public boolean equals(Object object) {
+		return EqualsBuilder.reflectionEquals(this, object);
+	}
+
+	@Override
+	public String toString() {
+		return ReflectionToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+	}
+	
+	@Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
 	}
 }
