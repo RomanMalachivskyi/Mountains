@@ -2,24 +2,21 @@ package com.home.education.mountains.resource.impl;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
-
 @Entity
 @Table(name = "Location")
 public class Location extends GenericResourceImpl {
 
-	private int id;
+	private int locationId;
 	private String mountainRange;
 	private String country;
 	private String description;
@@ -27,13 +24,13 @@ public class Location extends GenericResourceImpl {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
-	public int getId() {
-		return id;
+	@Column(name = "locationId", unique = true, nullable = false)
+	public int getLocatioId() {
+		return locationId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setLocatioId(int locationId) {
+		this.locationId = locationId;
 	}
 
 	@Column(name = "mountainRange", nullable = false)
@@ -62,23 +59,8 @@ public class Location extends GenericResourceImpl {
 	public void setDescription(String description) {
 		this.description = description;
 	};
-	
-	@Override
-	public boolean equals(Object object) {
-		return EqualsBuilder.reflectionEquals(this, object);
-	}
 
-	@Override
-	public String toString() {
-		return ReflectionToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-	}
-	
-	@Override
-	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
-	}
-
-	@OneToMany
+	@OneToMany(cascade = {CascadeType.ALL}, mappedBy = "location", fetch = FetchType.LAZY)
 	public List<Mountain> getMountains() {
 		return mountains;
 	}

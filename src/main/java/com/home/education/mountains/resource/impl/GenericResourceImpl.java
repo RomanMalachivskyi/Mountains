@@ -1,7 +1,26 @@
 package com.home.education.mountains.resource.impl;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 import com.home.education.mountains.resource.GenericResource;
 
-public class GenericResourceImpl implements GenericResource {
+public abstract class GenericResourceImpl implements GenericResource {
 
+	@Override
+	public boolean equals(Object object) {
+		return EqualsBuilder.reflectionEquals(this, object);
+	}
+
+	@Override
+	public String toString() {
+		return ReflectionToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+	}
+	
+	@Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
+	}
 }

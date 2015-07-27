@@ -9,11 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
-
 
 @Entity
 @Table(name="Category")
@@ -21,16 +16,16 @@ public class Category extends GenericResourceImpl implements Serializable {
 
 	private static final long serialVersionUID = -6737556781595570134L;
 
-	private int id;
+	private int categoryId;
 	private String name;
 	private String description;
 
 	public Category() {
 	}
 	
-	public Category(int id, String name, String description) {
+	public Category(int categoryId, String name, String description) {
 		super();
-		this.id = id;
+		this.categoryId = categoryId;
 		this.name = name;
 		this.description = description;
 	}
@@ -43,13 +38,13 @@ public class Category extends GenericResourceImpl implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
+	@Column(name = "categoryId", unique = true, nullable = false)
 	public int getId() {
-		return id;
+		return categoryId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	@Column(name = "name", unique = true, nullable = false)
@@ -68,21 +63,6 @@ public class Category extends GenericResourceImpl implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		return EqualsBuilder.reflectionEquals(this, object);
-	}
-
-	@Override
-	public String toString() {
-		return ReflectionToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-	}
-	
-	@Override
-	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
 	}
 	
 }
