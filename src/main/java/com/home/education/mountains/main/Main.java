@@ -16,7 +16,7 @@ public class Main {
 		//categoryDao.conn();
 		System.out.println(categoryDao.getById(2));
 		
-		LocationDao locationDao = new LocationDaoImpl();
+		LocationDaoImpl locationDao = new LocationDaoImpl();
 		//categoryDao.conn();
 		System.out.println(locationDao.getById(2));
 		

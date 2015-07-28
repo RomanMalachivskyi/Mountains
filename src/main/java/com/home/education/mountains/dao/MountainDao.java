@@ -2,8 +2,6 @@ package com.home.education.mountains.dao;
 
 import com.home.education.mountains.resource.impl.Mountain;
 
-public interface MountainDao {
+public interface MountainDao extends GenericDao<Mountain> {
 
-	Mountain getById(int id);
-	Mountain getByName(String name);
 }

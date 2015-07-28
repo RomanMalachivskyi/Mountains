@@ -12,9 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="Mountain")
+@Table(name="Mountain", uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
 public class Mountain extends GenericResourceImpl {
 
 	private int mountainId;

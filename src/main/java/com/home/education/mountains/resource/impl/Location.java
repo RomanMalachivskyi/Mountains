@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "Location")
@@ -21,6 +22,16 @@ public class Location extends GenericResourceImpl {
 	private String country;
 	private String description;
 	private List<Mountain> mountains;
+
+	public Location() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Location(String mountainRange, String country) {
+		super();
+		this.mountainRange = mountainRange;
+		this.country = country;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
