@@ -1,16 +1,20 @@
 package com.home.education.mountains.dao.impl;
 
 import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.home.education.mountains.dao.LocationDao;
 import com.home.education.mountains.resource.impl.Location;
 
 public class LocationDaoImpl implements LocationDao {
 
+	private static final Logger log = LoggerFactory.getLogger(LocationDaoImpl.class);
+	
 	public Location getById(int id) {
 		Session session = SessionFactoryUtils.getSessionFactory().openSession();
 		Location location = (Location) session.load(Location.class.getTypeName(), id);
-		System.out.println(location);
+		log.info(location.toString());
 		session.close();
 		return location;
 	}
