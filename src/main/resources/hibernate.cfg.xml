@@ -15,5 +15,6 @@
    <mapping class="com.home.education.mountains.resource.impl.Category"/>
    <mapping class="com.home.education.mountains.resource.impl.Location"/>
    <mapping class="com.home.education.mountains.resource.impl.Mountain"/>
+   <mapping class="com.home.education.mountains.resource.impl.Route"/>
 </session-factory>
 </hibernate-configuration>

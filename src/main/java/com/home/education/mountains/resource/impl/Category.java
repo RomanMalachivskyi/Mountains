@@ -1,35 +1,30 @@
 package com.home.education.mountains.resource.impl;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
 @Entity
 @Table(name="Category")
-public class Category extends GenericResourceImpl implements Serializable {
-
-	private static final long serialVersionUID = -6737556781595570134L;
+public class Category extends GenericResourceImpl{
 
 	private int categoryId;
 	private String name;
 	private String description;
+	private List<Route> routes;
 
 	public Category() {
+		// TODO Auto-generated constructor stub
 	}
-	
-	public Category(int categoryId, String name, String description) {
-		super();
-		this.categoryId = categoryId;
-		this.name = name;
-		this.description = description;
-	}
-
 	public Category(String name, String description) {
 		super();
 		this.name = name;
@@ -63,6 +58,15 @@ public class Category extends GenericResourceImpl implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+	public List<Route> getRoutes() {
+		return routes;
+	}
+
+	public void setRoutes(List<Route> routes) {
+		this.routes = routes;
 	}
 	
 }

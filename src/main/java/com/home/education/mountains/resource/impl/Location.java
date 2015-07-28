@@ -60,7 +60,7 @@ public class Location extends GenericResourceImpl {
 		this.description = description;
 	};
 
-	@OneToMany(cascade = {CascadeType.ALL}, mappedBy = "location", fetch = FetchType.LAZY)
+	@OneToMany( mappedBy = "location", fetch = FetchType.LAZY)
 	public List<Mountain> getMountains() {
 		return mountains;
 	}

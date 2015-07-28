@@ -20,7 +20,7 @@ import java.sql.Connection;
 public class CategoryDaoImpl implements CategoryDao {
 
 	public Category getById(int id) {
-		Session session = getSessionFactory().openSession();
+		Session session = SessionFactoryUtils.getSessionFactory().openSession();
 		//System.out.println(session.load(Category.class.getTypeName(), id));
 		//session.save(new Category("Captain Nemo","fdfdfd"));
 	      
@@ -39,37 +39,5 @@ public class CategoryDaoImpl implements CategoryDao {
 	public Category getByName(String name) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-	public static SessionFactory getSessionFactory() {
-		 try {
-	            // Create the SessionFactory from hibernate.cfg.xml
-	            return new Configuration().configure().buildSessionFactory();
-	        } catch (Throwable ex) {
-	            // Make sure you log the exception, as it might be swallowed
-	            System.err.println("Initial SessionFactory creation failed." + ex);
-	            throw new ExceptionInInitializerError(ex);
-	        }
-	}
-	public void conn() throws SQLException{
-		Connection conn = null;
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		String url = "jdbc:mysql://localhost:3306/mountains";//"jdbc:mysql://localhost:3306/developers";
-		String password = "1111";//"root";
-		String userName = "root";
-		try {
-			conn = DriverManager.getConnection(url, userName, password);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		PreparedStatement	stat = conn.prepareStatement("select * from category");;
-		ResultSet rs = stat.executeQuery();
-		while(rs.next()){
-			System.out.println(rs.getString("name"));
-		}
-		System.out.println(rs);
 	}
 }

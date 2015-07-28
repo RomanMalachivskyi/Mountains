@@ -1,5 +1,7 @@
 package com.home.education.mountains.resource.impl;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,6 +22,7 @@ public class Mountain extends GenericResourceImpl {
 	private Location location;
 	private String description;
 	private int height;
+	private List<Route> routes; 
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,12 +63,21 @@ public class Mountain extends GenericResourceImpl {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "mountainId", nullable = false, insertable = false, updatable=false)
+	@JoinColumn(name = "locationId", nullable = false, insertable = false, updatable=false)
 	public Location getLocation() {
 		return location;
 	}
 
 	public void setLocation(Location location) {
 		this.location = location;
+	}
+
+	@OneToMany(mappedBy= "mountain", fetch=FetchType.LAZY)
+	public List<Route> getRoutes() {
+		return routes;
+	}
+
+	public void setRoutes(List<Route> routes) {
+		this.routes = routes;
 	}
 }

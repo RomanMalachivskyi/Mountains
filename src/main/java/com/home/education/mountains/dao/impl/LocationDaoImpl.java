@@ -12,7 +12,7 @@ import com.home.education.mountains.resource.impl.Location;
 public class LocationDaoImpl implements LocationDao {
 
 	public Location getById(int id) {
-		Session session = getSessionFactory().openSession();
+		Session session = SessionFactoryUtils.getSessionFactory().openSession();
 		//System.out.println(session.load(Category.class.getTypeName(), id));
 		//session.save(new Category("Captain Nemo","fdfdfd"));
 	      
@@ -27,17 +27,6 @@ public class LocationDaoImpl implements LocationDao {
 		return location2;
 	}
 	
-	public static SessionFactory getSessionFactory() {
-		 try {
-	            // Create the SessionFactory from hibernate.cfg.xml
-	            return new Configuration().configure().buildSessionFactory();
-	        } catch (Throwable ex) {
-	            // Make sure you log the exception, as it might be swallowed
-	            System.err.println("Initial SessionFactory creation failed." + ex);
-	            throw new ExceptionInInitializerError(ex);
-	        }
-	}
-
 	public Location getByName(String name) {
 		// TODO Auto-generated method stub
 		return null;
