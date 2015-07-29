@@ -2,27 +2,30 @@ package com.home.education.mountains.main;
 
 import java.sql.SQLException;
 
-import com.home.education.mountains.dao.CategoryDao;
-import com.home.education.mountains.dao.LocationDao;
-import com.home.education.mountains.dao.MountainDao;
-import com.home.education.mountains.dao.impl.CategoryDaoImpl;
-import com.home.education.mountains.dao.impl.LocationDaoImpl;
-import com.home.education.mountains.dao.impl.MountainDaoImpl;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.home.education.mountains.service.LocationService;
 
 public class Main {
 
 	public static void main(String[] args) throws SQLException {
-		CategoryDao categoryDao = new CategoryDaoImpl();
-		//categoryDao.conn();
-		System.out.println(categoryDao.getById(2));
+		ApplicationContext appContext = 
+		    	  new ClassPathXmlApplicationContext("spring/config/BeanLocations.xml");
 		
-		LocationDaoImpl locationDao = new LocationDaoImpl();
-		//categoryDao.conn();
-		System.out.println(locationDao.getById(2));
-		
-		MountainDao mountainDao = new MountainDaoImpl();
-		//categoryDao.conn();
-		System.out.println(mountainDao.getById(2));
+		LocationService locationService = (LocationService) appContext.getBean("locationService");
+		System.out.println(locationService.getById(2));
+//		CategoryDao categoryDao = new CategoryDaoImpl();
+//		//categoryDao.conn();
+//		System.out.println(categoryDao.getById(2));
+//		
+//		LocationDaoImpl locationDao = new LocationDaoImpl();
+//		//categoryDao.conn();
+//		System.out.println(locationDao.getById(2));
+//		
+//		MountainDao mountainDao = new MountainDaoImpl();
+//		//categoryDao.conn();
+//		System.out.println(mountainDao.getById(2));
 	}
 
 }

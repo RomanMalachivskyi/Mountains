@@ -1,4 +1,4 @@
-package com.home.education.mountains.dao.impl;
+package com.home.education.mountains.common;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

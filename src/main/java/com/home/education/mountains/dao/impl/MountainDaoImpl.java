@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.home.education.mountains.common.SessionFactoryUtils;
 import com.home.education.mountains.dao.MountainDao;
 import com.home.education.mountains.resource.impl.Mountain;
 
