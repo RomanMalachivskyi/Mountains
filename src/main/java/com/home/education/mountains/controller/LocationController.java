@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.home.education.mountains.common.LocationValidationFailedException;
+import com.home.education.mountains.common.exception.LocationValidationFailedException;
 import com.home.education.mountains.dao.impl.CategoryDaoImpl;
 import com.home.education.mountains.resource.impl.Location;
 import com.home.education.mountains.service.LocationService;

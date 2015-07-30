@@ -1,4 +1,4 @@
-package com.home.education.mountains.common;
+package com.home.education.mountains.common.exception;
 
 public class ValidationFailedException extends Exception {
 
