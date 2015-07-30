@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.home.education.mountains.common.LocationValidationFailedException;
 import com.home.education.mountains.dao.impl.CategoryDaoImpl;
 import com.home.education.mountains.resource.impl.Location;
 import com.home.education.mountains.service.LocationService;
@@ -41,7 +42,7 @@ public class LocationController {
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<Location> getByMountainRange(@RequestParam(value = "mountainRange", required = true) final String mountainRange){
+	public List<Location> getByMountainRange(@RequestParam(value = "mountainRange", required = true) final String mountainRange) throws LocationValidationFailedException{
 		log.info("get Locations by mountainRange");
 		return locationService.getByMountainRange(mountainRange);
 	}
