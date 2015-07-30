@@ -2,12 +2,9 @@ package com.home.education.mountains.resource.impl;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,8 +12,10 @@ import javax.persistence.Table;
 public class Route extends GenericResourceImpl {
 
 	private int routeId;
-	private Mountain mountain;
-	private Category category;
+	//private Mountain mountain;
+	private int mountainId;
+	//private Category category;
+	private int categoryId;
 	private String name;
 	private String decription;
 
@@ -49,23 +48,41 @@ public class Route extends GenericResourceImpl {
 		this.decription = decription;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "mountainId", insertable = false, updatable = false)
-	public Mountain getMountain() {
-		return mountain;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "mountainId", insertable = false, updatable = false)
+//	public Mountain getMountain() {
+//		return mountain;
+//	}
+//
+//	public void setMountain(Mountain mountain) {
+//		this.mountain = mountain;
+//	}
+//
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "categoryId", insertable = false, updatable = false)
+//	public Category getCategory() {
+//		return category;
+//	}
+//
+//	public void setCategory(Category category) {
+//		this.category = category;
+//	}
+
+	@Column(name="mountainId")
+	public int getMountainId() {
+		return mountainId;
 	}
 
-	public void setMountain(Mountain mountain) {
-		this.mountain = mountain;
+	public void setMountainId(int mountainId) {
+		this.mountainId = mountainId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "categoryId", insertable = false, updatable = false)
-	public Category getCategory() {
-		return category;
+	@Column(name="categoryId")
+	public int getCategoryId() {
+		return categoryId;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
 }

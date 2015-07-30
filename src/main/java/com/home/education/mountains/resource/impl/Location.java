@@ -2,7 +2,6 @@ package com.home.education.mountains.resource.impl;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,12 +10,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
 @Table(name = "Location")
+@JsonSerialize
 public class Location extends GenericResourceImpl {
 
+	private static final long serialVersionUID = -2548061502644911318L;
+	
 	private int locationId;
 	private String mountainRange;
 	private String country;
@@ -71,7 +74,7 @@ public class Location extends GenericResourceImpl {
 		this.description = description;
 	};
 
-	@OneToMany( mappedBy = "location", fetch = FetchType.LAZY)
+	@OneToMany( mappedBy = "locationId", fetch = FetchType.LAZY)
 	public List<Mountain> getMountains() {
 		return mountains;
 	}

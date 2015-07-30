@@ -2,10 +2,7 @@ package com.home.education.mountains.dao;
 
 import com.home.education.mountains.resource.GenericResource;
 
-public interface GenericDao <R extends GenericResource>{
+public interface ReadWriteGenericDao<R extends GenericResource> extends ReadGenericDao<R> {
 
-	R getById(int id);
-	R getByName(String name);
 	R create(R resource);
-	
 }

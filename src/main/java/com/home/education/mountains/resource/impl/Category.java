@@ -1,6 +1,5 @@
 package com.home.education.mountains.resource.impl;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,11 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 
 @Entity
 @Table(name="Category")
+@JsonSerialize
 public class Category extends GenericResourceImpl{
 
+	private static final long serialVersionUID = -203735393745080990L;
 	private int categoryId;
 	private String name;
 	private String description;
@@ -60,7 +63,7 @@ public class Category extends GenericResourceImpl{
 		this.description = description;
 	}
 
-	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "categoryId", fetch = FetchType.LAZY)
 	public List<Route> getRoutes() {
 		return routes;
 	}

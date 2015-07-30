@@ -1,5 +1,7 @@
 package com.home.education.mountains.resource;
 
-public interface GenericResource {
+import java.io.Serializable;
+
+public interface GenericResource extends Serializable{
 
 }

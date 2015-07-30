@@ -1,24 +1,23 @@
 package com.home.education.mountains.dao.impl;
 
-import org.hibernate.Session;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.home.education.mountains.common.SessionFactoryUtils;
+import com.google.common.collect.Iterables;
+import com.home.education.mountains.common.CustomHibernateDaoSupport;
 import com.home.education.mountains.dao.CategoryDao;
 import com.home.education.mountains.resource.impl.Category;
 
-public class CategoryDaoImpl implements CategoryDao {
+public class CategoryDaoImpl extends CustomHibernateDaoSupport implements CategoryDao {
 
 	private static final Logger log = LoggerFactory.getLogger(CategoryDaoImpl.class);
 	
 	public Category getById(int id) {
-		Session session = SessionFactoryUtils.getSessionFactory().openSession();
-		Category category = (Category) session.load(Category.class.getTypeName(), id);
-		log.info(category.toString());
-		session.close();
-		
-		return category;
+		List<Category> result = (List<Category>) getHibernateTemplate().find("from Category where categoryId=?", id);
+		log.info(result.toString());
+		return Iterables.getOnlyElement(result);
 	}
 
 
@@ -29,6 +28,12 @@ public class CategoryDaoImpl implements CategoryDao {
 
 
 	public Category create(Category resource) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public List<Category> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

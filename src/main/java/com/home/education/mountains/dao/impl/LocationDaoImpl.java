@@ -20,6 +20,7 @@ public class LocationDaoImpl extends CustomHibernateDaoSupport implements Locati
 
 	public Location getById(int id) {
 		List<Location> result = (List<Location>) getHibernateTemplate().find("from Location where locationId=?", id);
+		log.info(result.toString());
 		return Iterables.getOnlyElement(result);
 //		Session session = SessionFactoryUtils.getSessionFactory().openSession();
 //		Location location = (Location) session.load(Location.class.getTypeName(), id);
@@ -28,9 +29,10 @@ public class LocationDaoImpl extends CustomHibernateDaoSupport implements Locati
 //		return location;
 	}
 
-	public Location getByName(String locationName) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Location> getByMountainRange(String mountainRange) {
+		List<Location> result = (List<Location>) getHibernateTemplate().find("from Location where mountainRange=?", mountainRange);
+		log.info(result.toString());
+		return result;
 	}
 
 	public Location create() {
@@ -44,13 +46,21 @@ public class LocationDaoImpl extends CustomHibernateDaoSupport implements Locati
 		return location;
 	}
 
+	
 	public Location create(Location resource) {
-		Session session = SessionFactoryUtils.getSessionFactory().openSession();
-		session.beginTransaction();
-		session.save(resource);
-
-		session.getTransaction().commit();
-		session.close();
+		int locationId =  (Integer) getHibernateTemplate().save(resource);
+		resource.setLocatioId(locationId);
 		return resource;
+//		Session session = SessionFactoryUtils.getSessionFactory().openSession();
+//		session.beginTransaction();
+//		session.save(resource);
+//
+//		session.getTransaction().commit();
+//		session.close();
+//		return resource;
+	}
+
+	public List<Location> getAll() {
+		return (List<Location>) getHibernateTemplate().find("from Location");
 	}
 }

@@ -1,6 +1,6 @@
 package com.home.education.mountains.resource.impl;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +8,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -18,12 +16,14 @@ import javax.persistence.UniqueConstraint;
 @Table(name="Mountain", uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
 public class Mountain extends GenericResourceImpl {
 
+	private static final long serialVersionUID = -5942986553948958078L;
 	private int mountainId;
 	private String name;
-	private Location location;
+	//private Location location;
 	private String description;
 	private int height;
-	private List<Route> routes; 
+	private Set<Route> routes; 
+	private int locationId; 
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,22 +63,31 @@ public class Mountain extends GenericResourceImpl {
 		this.height = height;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "locationId", nullable = false, insertable = false, updatable=false)
-	public Location getLocation() {
-		return location;
-	}
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "locationId", nullable = false, insertable = false, updatable=false)
+//	public Location getLocation() {
+//		return location;
+//	}
+//
+//	public void setLocation(Location location) {
+//		this.location = location;
+//	}
 
-	public void setLocation(Location location) {
-		this.location = location;
-	}
-
-	@OneToMany(mappedBy= "mountain", fetch=FetchType.LAZY)
-	public List<Route> getRoutes() {
+	@OneToMany(mappedBy= "mountainId", fetch=FetchType.LAZY)
+	public Set<Route> getRoutes() {
 		return routes;
 	}
 
-	public void setRoutes(List<Route> routes) {
+	public void setRoutes(Set<Route> routes) {
 		this.routes = routes;
+	}
+
+	@Column(name = "locationId")
+	public int getLocationId() {
+		return locationId;
+	}
+
+	public void setLocationId(int locationId) {
+		this.locationId = locationId;
 	}
 }
