@@ -12,6 +12,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="Mountain", uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
 public class Mountain extends GenericResourceImpl {
@@ -19,7 +23,7 @@ public class Mountain extends GenericResourceImpl {
 	private static final long serialVersionUID = -5942986553948958078L;
 	private int mountainId;
 	private String name;
-	//private Location location;
+	@Length(max = 100, message = "Description cannot be greater than 100 characters")
 	private String description;
 	private int height;
 	private Set<Route> routes; 
@@ -89,5 +93,16 @@ public class Mountain extends GenericResourceImpl {
 
 	public void setLocationId(int locationId) {
 		this.locationId = locationId;
+	}
+
+	@Override
+	@JsonIgnore
+	public int getId() {
+		return getMountainId();
+	}
+
+	@Override
+	public void setId(int id) {
+		setMountainId(id);
 	}
 }

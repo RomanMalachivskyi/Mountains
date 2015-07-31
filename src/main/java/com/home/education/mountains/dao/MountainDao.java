@@ -4,4 +4,5 @@ import com.home.education.mountains.resource.impl.Mountain;
 
 public interface MountainDao extends ReadWriteGenericDao<Mountain> {
 
+	Mountain getByName(String name);
 }

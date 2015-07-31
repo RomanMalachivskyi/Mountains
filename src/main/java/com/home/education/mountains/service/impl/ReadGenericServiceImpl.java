@@ -1,6 +1,6 @@
 package com.home.education.mountains.service.impl;
 
-import java.util.List;
+import java.util.Collection;
 
 import com.home.education.mountains.dao.ReadWriteGenericDao;
 import com.home.education.mountains.resource.GenericResource;
@@ -12,11 +12,13 @@ public abstract class ReadGenericServiceImpl<R extends GenericResource, D extend
 	public ReadGenericServiceImpl(final D dao) {
 		this.dao = dao;
 	}
+	@Override
 	public R getById(int resourceId) {
 		return dao.getById(resourceId);
 	}
 
-	public List<R> getAll() {
+	@Override
+	public Collection<R> getAll() {
 		return dao.getAll();
 	}
 

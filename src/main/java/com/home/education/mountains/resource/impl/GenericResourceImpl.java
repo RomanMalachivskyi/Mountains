@@ -9,6 +9,8 @@ import com.home.education.mountains.resource.GenericResource;
 
 public abstract class GenericResourceImpl implements GenericResource {
 
+	private static final long serialVersionUID = -2650192034379129609L;
+
 	@Override
 	public boolean equals(Object object) {
 		return EqualsBuilder.reflectionEquals(this, object);

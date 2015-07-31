@@ -11,10 +11,9 @@ public abstract class ReadWriteGenericServiceImpl<R extends GenericResource, D e
 		super(dao);
 	}
 	
-
+	@Override
 	public R create(R resource) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.create(resource);
 	}
 
 }

@@ -11,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
@@ -21,8 +25,13 @@ public class Location extends GenericResourceImpl {
 	private static final long serialVersionUID = -2548061502644911318L;
 	
 	private int locationId;
+	@NotBlank
+	@Length(max = 45, message = "MountainRange cannot be greater than 45 characters")
 	private String mountainRange;
+	@NotBlank
+	@Length(max = 45, message = "Country cannot be greater than 45 characters")
 	private String country;
+	@Length(max = 100, message = "Description cannot be greater than 100 characters")
 	private String description;
 	private List<Mountain> mountains;
 
@@ -81,5 +90,16 @@ public class Location extends GenericResourceImpl {
 
 	public void setMountains(List<Mountain> mountains) {
 		this.mountains = mountains;
+	}
+
+	@Override
+	@JsonIgnore
+	public int getId() {
+		return getLocatioId();
+	}
+
+	@Override
+	public void setId(int id) {
+		setLocatioId(id);
 	}
 }

@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.home.education.mountains.common.exception.LocationValidationFailedException;
@@ -22,11 +24,6 @@ public class LocationServiceImpl extends ReadWriteGenericServiceImpl<Location, L
 	}
 
 	@Override
-	public Location getById(int resourceId) {
-		return super.getById(resourceId);
-	}
-
-	@Override
 	public List<Location> getByMountainRange(String mountainRange) throws LocationValidationFailedException {
 		if (StringUtils.isBlank(mountainRange)) {
 			throw new LocationValidationFailedException(
@@ -38,12 +35,7 @@ public class LocationServiceImpl extends ReadWriteGenericServiceImpl<Location, L
 	}
 
 	@Override
-	public List<Location> getAll() {
-		return super.getAll();
-	}
-
-	@Override
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
 	public Location create(Location resource) {
 		return super.create(resource);
 	}

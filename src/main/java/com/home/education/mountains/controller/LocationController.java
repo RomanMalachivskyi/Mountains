@@ -1,6 +1,6 @@
 package com.home.education.mountains.controller;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.home.education.mountains.common.exception.LocationValidationFailedException;
-import com.home.education.mountains.dao.impl.CategoryDaoImpl;
 import com.home.education.mountains.resource.impl.Location;
 import com.home.education.mountains.service.LocationService;
 
@@ -24,7 +23,7 @@ import com.home.education.mountains.service.LocationService;
 @RequestMapping("/location")
 public class LocationController {
 	
-	private static final Logger log = LoggerFactory.getLogger(CategoryDaoImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(LocationController.class);
 	
 	@Autowired
 	private LocationService locationService; 
@@ -42,7 +41,7 @@ public class LocationController {
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<Location> getByMountainRange(@RequestParam(value = "mountainRange", required = true) final String mountainRange) throws LocationValidationFailedException{
+	public Collection<Location> getByMountainRange(@RequestParam(value = "mountainRange", required = true) final String mountainRange) throws LocationValidationFailedException{
 		log.info("get Locations by mountainRange");
 		return locationService.getByMountainRange(mountainRange);
 	}

@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 
@@ -37,11 +38,11 @@ public class Category extends GenericResourceImpl{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "categoryId", unique = true, nullable = false)
-	public int getId() {
+	public int getCategoryId() {
 		return categoryId;
 	}
 
-	public void setId(int categoryId) {
+	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
 	}
 
@@ -72,4 +73,14 @@ public class Category extends GenericResourceImpl{
 		this.routes = routes;
 	}
 	
+	@Override
+	@JsonIgnore
+	public int getId() {
+		return getCategoryId();
+	}
+
+	@Override
+	public void setId(int categoryId) {
+		setCategoryId(categoryId);
+	}
 }
