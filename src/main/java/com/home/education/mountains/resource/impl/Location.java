@@ -25,13 +25,13 @@ public class Location extends GenericResourceImpl {
 	private static final long serialVersionUID = -2548061502644911318L;
 	
 	private int locationId;
-	@NotBlank
-	@Length(max = 45, message = "MountainRange cannot be greater than 45 characters")
+	@NotBlank(message = "MountainRange cann't be empty")
+	@Length(max = 45, message = "MountainRange cann't be greater than 45 characters")
 	private String mountainRange;
-	@NotBlank
-	@Length(max = 45, message = "Country cannot be greater than 45 characters")
+	@NotBlank(message = "Country cann't be empty")
+	@Length(max = 45, message = "Country cann't be greater than 45 characters")
 	private String country;
-	@Length(max = 100, message = "Description cannot be greater than 100 characters")
+	@Length(max = 100, message = "Description cann't be greater than 100 characters")
 	private String description;
 	private List<Mountain> mountains;
 
@@ -48,11 +48,11 @@ public class Location extends GenericResourceImpl {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "locationId", unique = true, nullable = false)
-	public int getLocatioId() {
+	public int getLocationId() {
 		return locationId;
 	}
 
-	public void setLocatioId(int locationId) {
+	public void setLocationId(int locationId) {
 		this.locationId = locationId;
 	}
 
@@ -95,11 +95,11 @@ public class Location extends GenericResourceImpl {
 	@Override
 	@JsonIgnore
 	public int getId() {
-		return getLocatioId();
+		return getLocationId();
 	}
 
 	@Override
 	public void setId(int id) {
-		setLocatioId(id);
+		setLocationId(id);
 	}
 }

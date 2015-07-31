@@ -11,8 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -22,11 +26,16 @@ public class Mountain extends GenericResourceImpl {
 
 	private static final long serialVersionUID = -5942986553948958078L;
 	private int mountainId;
+	@NotBlank(message = "MountainName cann't be empty")
+	@Length(max = 45, message = "MountainName cannot be greater than 45 characters")
 	private String name;
 	@Length(max = 100, message = "Description cannot be greater than 100 characters")
 	private String description;
+	@Min(value = 0,  message = "the mountain cann't has a negative height, please verify your data")
+	@Max(value = 8848, message = "the highest peak has a height 8848, please verify your data")
 	private int height;
 	private Set<Route> routes; 
+	@NotNull(message = "Mountain should have connectivity with Location")
 	private int locationId; 
 	
 	@Id

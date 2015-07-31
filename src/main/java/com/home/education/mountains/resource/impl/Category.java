@@ -26,15 +26,6 @@ public class Category extends GenericResourceImpl{
 	private String description;
 	private List<Route> routes;
 
-	public Category() {
-		// TODO Auto-generated constructor stub
-	}
-	public Category(String name, String description) {
-		super();
-		this.name = name;
-		this.description = description;
-	}
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "categoryId", unique = true, nullable = false)

@@ -6,8 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -16,8 +18,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Route extends GenericResourceImpl {
 
 	private int routeId;
+	@NotNull(message = "Route should have connectivity with Mountain")
 	private int mountainId;
+	@NotNull(message = "Route should have connectivity with Category")
 	private int categoryId;
+	@NotBlank(message = "RouteName cann't be empty")
+	@Length(max = 45, message = "RouteName cannot be greater than 45 characters")
 	private String name;
 	@Length(max = 100, message = "Description cannot be greater than 100 characters")
 	private String decription;

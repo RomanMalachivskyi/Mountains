@@ -2,10 +2,12 @@ package com.home.education.mountains.dao.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import com.home.education.mountains.dao.CategoryDao;
 import com.home.education.mountains.resource.impl.Category;
 
+@Repository("categoryDao")
 public class CategoryDaoImpl extends ReadGenericDaoImpl<Category> implements CategoryDao {
 
 	private static final Logger LOG = LoggerFactory.getLogger(CategoryDaoImpl.class);
