@@ -3,6 +3,7 @@ package com.home.education.mountains.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.home.education.mountains.common.exception.ResourceException;
 import com.home.education.mountains.dao.CategoryDao;
 import com.home.education.mountains.resource.impl.Category;
 import com.home.education.mountains.service.CategoryService;
@@ -19,6 +20,12 @@ public class CategoryServiceImpl extends ReadGenericServiceImpl<Category, Catego
 	public Category getByName(String routeName) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	protected void throwDoesNotExistsException(String msg) throws ResourceException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

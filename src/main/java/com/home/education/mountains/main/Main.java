@@ -5,11 +5,12 @@ import java.sql.SQLException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.home.education.mountains.common.exception.ResourceException;
 import com.home.education.mountains.service.LocationService;
 
 public class Main {
 
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws SQLException, ResourceException {
 		ApplicationContext appContext = 
 		    	  new ClassPathXmlApplicationContext("spring/config/BeanLocations.xml");
 		

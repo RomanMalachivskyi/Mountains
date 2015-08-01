@@ -35,6 +35,12 @@ public class GlobalControllerExceptionHandler extends ResponseEntityExceptionHan
 		return new ResponseEntity<>(ex.getMostSpecificCause().getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 	
+	@ExceptionHandler({ LocationDoesNotExistsException.class })
+	public ResponseEntity<Object> handleLocationDoesNotExists(LocationDoesNotExistsException ex) {
+		log.error(ex.getMessage());
+		return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+	}
+	
 	@ExceptionHandler({ RuntimeException.class })
 	public ResponseEntity<Object> handleRuntimeException(RuntimeException ex) {
 		log.error("Handling unexpected runtime exception: " + ex.getMessage(), ex);

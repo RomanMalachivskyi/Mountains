@@ -18,14 +18,12 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name="Mountain", uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
 public class Mountain extends GenericResourceImpl {
 
 	private static final long serialVersionUID = -5942986553948958078L;
-	private int mountainId;
+	private int id;
 	@NotBlank(message = "MountainName cann't be empty")
 	@Length(max = 45, message = "MountainName cannot be greater than 45 characters")
 	private String name;
@@ -37,17 +35,6 @@ public class Mountain extends GenericResourceImpl {
 	private Set<Route> routes; 
 	@NotNull(message = "Mountain should have connectivity with Location")
 	private int locationId; 
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "mountainId", unique = true, nullable = false)
-	public int getMountainId() {
-		return mountainId;
-	}
-	
-	public void setMountainId(int mountainId) {
-		this.mountainId = mountainId;
-	}
 	
 	@Column(name = "name", unique = true, nullable = false)
 	public String getName() {
@@ -76,16 +63,6 @@ public class Mountain extends GenericResourceImpl {
 		this.height = height;
 	}
 
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "locationId", nullable = false, insertable = false, updatable=false)
-//	public Location getLocation() {
-//		return location;
-//	}
-//
-//	public void setLocation(Location location) {
-//		this.location = location;
-//	}
-
 	@OneToMany(mappedBy= "mountainId", fetch=FetchType.LAZY)
 	public Set<Route> getRoutes() {
 		return routes;
@@ -105,13 +82,15 @@ public class Mountain extends GenericResourceImpl {
 	}
 
 	@Override
-	@JsonIgnore
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "mountainId", unique = true, nullable = false)
 	public int getId() {
-		return getMountainId();
+		return id;
 	}
 
 	@Override
 	public void setId(int id) {
-		setMountainId(id);
+		this.id = id;
 	}
 }

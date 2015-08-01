@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.home.education.mountains.common.exception.ResourceException;
 import com.home.education.mountains.resource.impl.Category;
 import com.home.education.mountains.service.CategoryService;
 
@@ -26,7 +27,7 @@ public class CategoryController {
 	@RequestMapping(value = "/{categoryId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Category getById(final @PathVariable int categoryId) {
+	public Category getById(final @PathVariable int categoryId) throws ResourceException {
 		log.info("get Location by Id");
 		Category category = categoryService.getById(categoryId);
 		return category;

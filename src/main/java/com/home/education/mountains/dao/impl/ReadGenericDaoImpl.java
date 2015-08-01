@@ -5,7 +5,6 @@ import java.util.Collection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Iterables;
 import com.home.education.mountains.common.CustomHibernateDaoSupport;
 import com.home.education.mountains.dao.ReadGenericDao;
 import com.home.education.mountains.resource.GenericResource;
@@ -20,12 +19,13 @@ public class ReadGenericDaoImpl<R extends GenericResource> extends CustomHiberna
 		this.tableName = tableName;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public R getById(int id) {
+	public Collection<R> getById(int id) {
 		Collection<R> result = (Collection<R>) getHibernateTemplate()
 				.find("from " + tableName + " where " + tableName.toLowerCase() + "Id=?", id);
 		LOG.info("get " + tableName + " by id:" + id + result.toString());
-		return Iterables.getOnlyElement(result);
+		return result;
 	}
 
 	@Override

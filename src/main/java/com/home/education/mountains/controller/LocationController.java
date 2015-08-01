@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.home.education.mountains.common.exception.LocationValidationFailedException;
+import com.home.education.mountains.common.exception.ResourceException;
 import com.home.education.mountains.resource.impl.Location;
 import com.home.education.mountains.service.LocationService;
 
@@ -31,7 +32,7 @@ public class LocationController {
 	@RequestMapping(value= "/{locationId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Location getById(final @PathVariable int locationId){
+	public Location getById(final @PathVariable int locationId) throws ResourceException{
 		log.info("get Location by Id");
 		Location location = locationService.getById(locationId);
 		return location;

@@ -6,7 +6,7 @@ import com.home.education.mountains.resource.GenericResource;
 
 public interface ReadGenericDao <R extends GenericResource>{
 
-	R getById(int id);
+	Collection<R> getById(int id);
 	Collection<R> getAll();
 	
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.home.education.mountains.common.exception.ResourceException;
 import com.home.education.mountains.resource.impl.Mountain;
 import com.home.education.mountains.service.MountainService;
 
@@ -26,7 +27,7 @@ private static final Logger log = LoggerFactory.getLogger(LocationController.cla
 	@RequestMapping(value= "/{mountainId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Mountain getById(final @PathVariable int mountainId){
+	public Mountain getById(final @PathVariable int mountainId) throws ResourceException{
 		log.info("get Mountain by Id");
 		Mountain mountain = mountainService.getById(mountainId);
 		return mountain;
@@ -36,7 +37,7 @@ private static final Logger log = LoggerFactory.getLogger(LocationController.cla
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
 	public Mountain create(@RequestBody final Mountain mountain){
-		log.info("create Location");
+		log.info("create Mountain");
 		return mountainService.create(mountain);
 	}
 }

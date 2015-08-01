@@ -21,11 +21,6 @@ public class LocationDaoImpl extends ReadWriteGenericDaoImpl<Location> implement
 	private static final Logger log = LoggerFactory.getLogger(LocationDaoImpl.class);
 
 	@Override
-	public Location getById(int id) {
-		return super.getById(id);
-	}
-
-	@Override
 	public Collection<Location> getByMountainRange(String mountainRange) {
 		Collection<Location> result = (Collection<Location>) getHibernateTemplate().find("from Location where mountainRange=?", mountainRange);
 		log.info("get Locations by MountainRange:" + mountainRange + result.toString());

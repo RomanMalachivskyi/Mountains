@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.home.education.mountains.common.exception.LocationDoesNotExistsException;
 import com.home.education.mountains.common.exception.LocationValidationFailedException;
 import com.home.education.mountains.dao.LocationDao;
 import com.home.education.mountains.resource.impl.Location;
@@ -38,6 +39,11 @@ public class LocationServiceImpl extends ReadWriteGenericServiceImpl<Location, L
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
 	public Location create(Location resource) {
 		return super.create(resource);
+	}
+
+	@Override
+	protected void throwDoesNotExistsException(String msg) throws LocationDoesNotExistsException {
+		throw new LocationDoesNotExistsException(msg);
 	}
 
 }

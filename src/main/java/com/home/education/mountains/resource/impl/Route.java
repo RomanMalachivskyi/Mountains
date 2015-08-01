@@ -11,13 +11,13 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name = "Route")
 public class Route extends GenericResourceImpl {
-
-	private int routeId;
+	
+	private static final long serialVersionUID = -6139890331397993029L;
+	
+	private int id;
 	@NotNull(message = "Route should have connectivity with Mountain")
 	private int mountainId;
 	@NotNull(message = "Route should have connectivity with Category")
@@ -27,17 +27,6 @@ public class Route extends GenericResourceImpl {
 	private String name;
 	@Length(max = 100, message = "Description cannot be greater than 100 characters")
 	private String decription;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "routeId", unique = true, nullable = false)
-	public int getRouteId() {
-		return routeId;
-	}
-
-	public void setRouteId(int routeId) {
-		this.routeId = routeId;
-	}
 
 	@Column(name = "name", nullable = false)
 	public String getName() {
@@ -76,13 +65,15 @@ public class Route extends GenericResourceImpl {
 	}
 
 	@Override
-	@JsonIgnore
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "routeId", unique = true, nullable = false)
 	public int getId() {
-		return getRouteId();
+		return id;
 	}
 
 	@Override
 	public void setId(int id) {
-		setRouteId(id);
+		this.id = id;
 	}
 }

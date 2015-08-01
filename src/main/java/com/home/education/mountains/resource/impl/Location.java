@@ -14,7 +14,6 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
@@ -24,7 +23,7 @@ public class Location extends GenericResourceImpl {
 
 	private static final long serialVersionUID = -2548061502644911318L;
 	
-	private int locationId;
+	private int id;
 	@NotBlank(message = "MountainRange cann't be empty")
 	@Length(max = 45, message = "MountainRange cann't be greater than 45 characters")
 	private String mountainRange;
@@ -36,7 +35,6 @@ public class Location extends GenericResourceImpl {
 	private List<Mountain> mountains;
 
 	public Location() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Location(String mountainRange, String country) {
@@ -45,18 +43,7 @@ public class Location extends GenericResourceImpl {
 		this.country = country;
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "locationId", unique = true, nullable = false)
-	public int getLocationId() {
-		return locationId;
-	}
-
-	public void setLocationId(int locationId) {
-		this.locationId = locationId;
-	}
-
-	@Column(name = "mountainRange", nullable = false)
+	@Column(name = "mountainRange", nullable = false, unique = false)
 	public String getMountainRange() {
 		return mountainRange;
 	}
@@ -93,13 +80,15 @@ public class Location extends GenericResourceImpl {
 	}
 
 	@Override
-	@JsonIgnore
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "locationId", unique = true, nullable = false)
 	public int getId() {
-		return getLocationId();
+		return id;
 	}
 
 	@Override
 	public void setId(int id) {
-		setLocationId(id);
+		this.id=id;
 	}
 }

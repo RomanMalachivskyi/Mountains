@@ -1,6 +1,6 @@
 package com.home.education.mountains.common.exception;
 
-public class ValidationFailedException extends Exception {
+public class ValidationFailedException extends ResourceException {
 
 	public ValidationFailedException(String message) {
 		super(message);
