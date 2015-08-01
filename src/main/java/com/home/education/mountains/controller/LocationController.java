@@ -52,9 +52,18 @@ public class LocationController {
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public Location create(@RequestBody final @Valid Location location){
+	public Location create(@RequestBody final @Valid Location location) throws ResourceException{
 		log.info("create Location");
 		return locationService.create(location);
+	}
+	
+	@RequestMapping(value= "/{locationId}", method = RequestMethod.PUT)
+	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseBody
+	public Location modify(@RequestBody final @Valid Location location, final @PathVariable int locationId) throws ResourceException{
+		log.info("modify Location");
+		location.setId(locationId);
+		return locationService.update(location);
 	}
 	
 }

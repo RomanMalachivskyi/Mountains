@@ -19,7 +19,7 @@ import com.home.education.mountains.resource.impl.Mountain;
 import com.home.education.mountains.service.MountainService;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/mountain")
 public class MountainController {
 	private static final Logger log = LoggerFactory.getLogger(MountainController.class);
 	
@@ -38,7 +38,7 @@ public class MountainController {
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public Mountain create(@Valid @RequestBody final Mountain mountain){
+	public Mountain create(@Valid @RequestBody final Mountain mountain) throws ResourceException{
 		log.info("create Mountain");
 		return mountainService.create(mountain);
 	}

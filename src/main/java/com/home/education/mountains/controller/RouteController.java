@@ -39,7 +39,7 @@ public class RouteController {
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public Route create(@Valid @RequestBody final Route route){
+	public Route create(@Valid @RequestBody final Route route) throws ResourceException{
 		log.info("create Route");
 		return routeService.create(route);
 	}

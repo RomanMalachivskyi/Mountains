@@ -15,6 +15,8 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -64,6 +66,7 @@ public class Mountain extends GenericResourceImpl {
 	}
 
 	@OneToMany(mappedBy= "mountainId", fetch=FetchType.LAZY)
+	@Cascade({CascadeType.SAVE_UPDATE})
 	public Set<Route> getRoutes() {
 		return routes;
 	}

@@ -1,5 +1,6 @@
 package com.home.education.mountains.service.impl;
 
+import com.home.education.mountains.common.exception.ResourceException;
 import com.home.education.mountains.dao.ReadWriteGenericDao;
 import com.home.education.mountains.resource.GenericResource;
 import com.home.education.mountains.service.ReadWriteGenericService;
@@ -11,8 +12,12 @@ public abstract class ReadWriteGenericServiceImpl<R extends GenericResource, D e
 	}
 	
 	@Override
-	public R create(R resource) {
+	public R create(R resource) throws ResourceException {
 		return dao.create(resource);
 	}
 
+	@Override
+	public R update(R resource) {
+		return dao.update(resource);
+	}
 }

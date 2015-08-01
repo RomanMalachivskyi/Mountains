@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.Valid;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -73,6 +75,7 @@ public class Location extends GenericResourceImpl {
 	};
 
 	@OneToMany( mappedBy = "locationId", fetch = FetchType.LAZY)
+	@Cascade({CascadeType.SAVE_UPDATE})
 	public List<Mountain> getMountains() {
 		return mountains;
 	}
@@ -84,7 +87,7 @@ public class Location extends GenericResourceImpl {
 	@Override
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "locationId", unique = true, nullable = false)
+	@Column(name = "locationId")
 	public int getId() {
 		return id;
 	}
