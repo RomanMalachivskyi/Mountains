@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -32,6 +33,7 @@ public class Location extends GenericResourceImpl {
 	private String country;
 	@Length(max = 100, message = "Description cann't be greater than 100 characters")
 	private String description;
+	@Valid
 	private List<Mountain> mountains;
 
 	public Location() {

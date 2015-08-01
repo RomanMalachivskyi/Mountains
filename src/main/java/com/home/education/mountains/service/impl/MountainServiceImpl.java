@@ -3,7 +3,7 @@ package com.home.education.mountains.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.home.education.mountains.common.exception.ResourceException;
+import com.home.education.mountains.common.exception.MountainDoesNotExistsException;
 import com.home.education.mountains.dao.MountainDao;
 import com.home.education.mountains.resource.impl.Mountain;
 import com.home.education.mountains.service.MountainService;
@@ -17,9 +17,8 @@ public class MountainServiceImpl extends ReadWriteGenericServiceImpl<Mountain, M
 	}
 
 	@Override
-	protected void throwDoesNotExistsException(String msg) throws ResourceException {
-		// TODO Auto-generated method stub
-		
+	protected void throwDoesNotExistsException(String msg) throws MountainDoesNotExistsException {
+		throw new MountainDoesNotExistsException(msg);
 	}
 
 }

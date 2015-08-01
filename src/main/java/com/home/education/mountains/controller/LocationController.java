@@ -2,6 +2,8 @@ package com.home.education.mountains.controller;
 
 import java.util.Collection;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +52,7 @@ public class LocationController {
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public Location create(@RequestBody final Location location){
+	public Location create(@RequestBody final @Valid Location location){
 		log.info("create Location");
 		return locationService.create(location);
 	}

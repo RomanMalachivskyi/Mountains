@@ -15,31 +15,32 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.home.education.mountains.common.exception.ResourceException;
-import com.home.education.mountains.resource.impl.Mountain;
-import com.home.education.mountains.service.MountainService;
+import com.home.education.mountains.resource.impl.Route;
+import com.home.education.mountains.service.RouteService;
 
 @Controller
-@RequestMapping("/")
-public class MountainController {
-	private static final Logger log = LoggerFactory.getLogger(MountainController.class);
+@RequestMapping("/route")
+public class RouteController {
+
+	private static final Logger log = LoggerFactory.getLogger(RouteController.class);
 	
 	@Autowired
-	private MountainService mountainService; 
+	private RouteService routeService; 
 
 	@RequestMapping(value= "/{mountainId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Mountain getById(final @PathVariable int mountainId) throws ResourceException{
-		log.info("get Mountain by Id");
-		Mountain mountain = mountainService.getById(mountainId);
+	public Route getById(final @PathVariable int routeId) throws ResourceException{
+		log.info("get Route by Id");
+		Route mountain = routeService.getById(routeId);
 		return mountain;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public Mountain create(@Valid @RequestBody final Mountain mountain){
-		log.info("create Mountain");
-		return mountainService.create(mountain);
+	public Route create(@Valid @RequestBody final Route route){
+		log.info("create Route");
+		return routeService.create(route);
 	}
 }
