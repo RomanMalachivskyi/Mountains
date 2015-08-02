@@ -22,12 +22,12 @@ public class ReadGenericDaoImpl<R extends GenericResource> extends CustomHiberna
 	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<R> getById(int id) {
-		Collection<R> result = (Collection<R>) getHibernateTemplate()
+		LOG.info("get " + tableName + " by id:" + id);
+		return (Collection<R>) getHibernateTemplate()
 				.find("from " + tableName + " where " + tableName.toLowerCase() + "Id=?", id);
-		LOG.info("get " + tableName + " by id:" + id + result.toString());
-		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<R> getAll() {
 		LOG.info("get all" + tableName + "s");

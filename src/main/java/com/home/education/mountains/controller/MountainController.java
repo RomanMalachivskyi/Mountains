@@ -42,4 +42,21 @@ public class MountainController {
 		log.info("create Mountain");
 		return mountainService.create(mountain);
 	}
+	
+	@RequestMapping(value= "/{mountainId}",method = RequestMethod.PUT)
+	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseBody
+	public Mountain modify(@Valid @RequestBody final Mountain mountain, final @PathVariable int mountainId) throws ResourceException{
+		log.info("update Mountain");
+		mountain.setId(mountainId);
+		return mountainService.update(mountain);
+	}
+	
+	@RequestMapping(value= "/{mountainId}", method = RequestMethod.DELETE)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public Mountain delete(final @PathVariable int mountainId) throws ResourceException{
+		log.info("delete Mountain by Id");
+		return mountainService.delete(mountainService.getById(mountainId));
+	}
 }

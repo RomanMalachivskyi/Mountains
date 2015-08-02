@@ -30,6 +30,12 @@ public class GlobalControllerExceptionHandler extends ResponseEntityExceptionHan
 		return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 
+	@ExceptionHandler({ CategoryValidationFailedException.class })
+	public ResponseEntity<Object> handleCategoryValidation(CategoryValidationFailedException ex) {
+		log.error(ex.getMessage(), ex);
+		return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+	}
+
 	@ExceptionHandler({ ConstraintViolationException.class })
 	public ResponseEntity<Object> handleConstrainValidation(ConstraintViolationException ex) {
 		log.error(ex.getMessage(), ex);
@@ -84,7 +90,12 @@ public class GlobalControllerExceptionHandler extends ResponseEntityExceptionHan
 		return new ResponseEntity<Object>(reasons, HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 
-	
+	@ExceptionHandler({ IllegalStateException.class })
+	public ResponseEntity<Object> handleRuntimeException(IllegalStateException ex) {
+		log.error(ex.getMessage(), ex);
+		return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
 	@ExceptionHandler({ RuntimeException.class })
 	public ResponseEntity<Object> handleRuntimeException(RuntimeException ex) {
 		log.error("Handling unexpected runtime exception: " + ex.getMessage(), ex);

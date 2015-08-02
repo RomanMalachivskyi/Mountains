@@ -25,45 +25,57 @@ import com.home.education.mountains.service.LocationService;
 @Controller
 @RequestMapping("/location")
 public class LocationController {
-	
-	private static final Logger log = LoggerFactory.getLogger(LocationController.class);
-	
-	@Autowired
-	private LocationService locationService; 
 
-	@RequestMapping(value= "/{locationId}", method = RequestMethod.GET)
+	private static final Logger log = LoggerFactory.getLogger(LocationController.class);
+
+	@Autowired
+	private LocationService locationService;
+
+	@RequestMapping(value = "/{locationId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Location getById(final @PathVariable int locationId) throws ResourceException{
+	public Location getById(final @PathVariable int locationId) throws ResourceException {
 		log.info("get Location by Id");
 		Location location = locationService.getById(locationId);
 		return location;
 	}
-	
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Collection<Location> getByMountainRange(@RequestParam(value = "mountainRange", required = true) final String mountainRange) throws LocationValidationFailedException{
+	public Collection<Location> getByMountainRange(
+			@RequestParam(value = "mountainRange", required = false) final String mountainRange,
+			@RequestParam(value = "country", required = false) final String country)
+					throws LocationValidationFailedException {
 		log.info("get Locations by mountainRange");
-		return locationService.getByMountainRange(mountainRange);
+		return locationService.getAllFiltered(mountainRange, country);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public Location create(@RequestBody final @Valid Location location) throws ResourceException{
+	public Location create(@RequestBody final @Valid Location location) throws ResourceException {
 		log.info("create Location");
 		return locationService.create(location);
 	}
-	
-	@RequestMapping(value= "/{locationId}", method = RequestMethod.PUT)
-	@ResponseStatus(HttpStatus.CREATED)
+
+	@RequestMapping(value = "/{locationId}", method = RequestMethod.PUT)
+	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Location modify(@RequestBody final @Valid Location location, final @PathVariable int locationId) throws ResourceException{
+	public Location modify(@RequestBody final @Valid Location location, final @PathVariable int locationId)
+			throws ResourceException {
 		log.info("modify Location");
 		location.setId(locationId);
+		location.getMountains().stream().forEach(m -> m.setLocationId(locationId));
 		return locationService.update(location);
 	}
-	
+	//
+	// @RequestMapping(method = RequestMethod.DELETE)
+	// @ResponseStatus(HttpStatus.OK)
+	// @ResponseBody
+	// public Location delete(@RequestBody final @Valid Location location)
+	// throws ResourceException{
+	// log.info("delete Location");
+	// return locationService.delete(location);
+	// }
 }

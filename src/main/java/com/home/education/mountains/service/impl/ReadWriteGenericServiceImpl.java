@@ -17,7 +17,14 @@ public abstract class ReadWriteGenericServiceImpl<R extends GenericResource, D e
 	}
 
 	@Override
-	public R update(R resource) {
+	public R update(R resource) throws ResourceException {
 		return dao.update(resource);
 	}
+	
+	@Override
+	public R delete(R resource) throws ResourceException {
+		return dao.delete(resource);
+	}
+	
+	protected abstract void validateResource(R resource) throws ResourceException;
 }

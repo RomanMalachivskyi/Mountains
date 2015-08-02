@@ -21,7 +21,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name="Mountain", uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
+@Table(name="Mountain", uniqueConstraints={@UniqueConstraint(columnNames={"name"}, name="uq_mountain_name")})
 public class Mountain extends GenericResourceImpl {
 
 	private static final long serialVersionUID = -5942986553948958078L;

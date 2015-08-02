@@ -1,5 +1,7 @@
 package com.home.education.mountains.controller;
 
+import java.util.Collection;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +26,21 @@ public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
 
-	@RequestMapping(value = "/{categoryId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{categoryName}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Category getById(final @PathVariable int categoryId) throws ResourceException {
-		log.info("get Location by Id");
-		Category category = categoryService.getById(categoryId);
+	public Category getByName(final @PathVariable String categoryName) throws ResourceException {
+		log.info("get Category by name");
+		Category category = categoryService.getByName(categoryName);
 		return category;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public Collection<Category> getAll() throws ResourceException {
+		log.info("get all categories");
+		Collection<Category> categories = categoryService.getAll();
+		return categories;
 	}
 }

@@ -1,5 +1,7 @@
 package com.home.education.mountains.dao.impl;
 
+import java.util.Collection;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -17,9 +19,11 @@ public class CategoryDaoImpl extends ReadGenericDaoImpl<Category> implements Cat
 		super(TABLE_NAME);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Category getByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<Category> getByName(String name) {
+		LOG.info("get Category by name");
+		return (Collection<Category>) getHibernateTemplate()
+				.find("from " + tableName + " where name=?", name);
 	}
 }

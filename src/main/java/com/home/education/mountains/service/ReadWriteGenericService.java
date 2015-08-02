@@ -7,4 +7,5 @@ public interface ReadWriteGenericService<R extends GenericResource> extends Read
 
 	R create (R resource) throws ResourceException;
 	R update (R resource) throws ResourceException;
+	R delete (R resource) throws ResourceException;
 }

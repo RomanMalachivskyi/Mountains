@@ -1,6 +1,6 @@
 package com.home.education.mountains.service.impl;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
@@ -26,31 +26,43 @@ public class LocationServiceImpl extends ReadWriteGenericServiceImpl<Location, L
 	}
 
 	@Override
-	public List<Location> getByMountainRange(String mountainRange) throws LocationValidationFailedException {
-		if (StringUtils.isBlank(mountainRange)) {
-			throw new LocationValidationFailedException(
-					"Location validation failed. Reason mountainRange  " + mountainRange + " is invalid");
+	public Collection<Location> getAllFiltered(String mountainRange, String country) throws LocationValidationFailedException {
+		Collection<Location> result = getAll();
+		if (StringUtils.isNotBlank(mountainRange)) {
+			result = result.stream().filter(l -> l.getMountainRange().equals(mountainRange))
+					.collect(Collectors.toList());
 		}
-		List<Location> result = dao.getAll().stream().filter(l -> l.getMountainRange().equals(mountainRange))
-				.collect(Collectors.toList());
+		
+		if (StringUtils.isNotBlank(country)) {
+			result = result.stream().filter(l -> l.getCountry().equals(country))
+					.collect(Collectors.toList());
+		}
+		
 		return result;
 	}
-
+	
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
 	public Location create(Location resource) throws ResourceException {
+		validateResource(resource);
 		return super.create(resource);
 	}
 
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
-	public Location update(Location resource) {
+	public Location update(Location resource) throws ResourceException {
+		validateResource(resource);
 		return super.update(resource);
 	}
 	
 	@Override
 	protected void throwDoesNotExistsException(String msg) throws LocationDoesNotExistsException {
 		throw new LocationDoesNotExistsException(msg);
+	}
+
+	@Override
+	protected void validateResource(Location resource) throws ResourceException {
+		
 	}
 
 }

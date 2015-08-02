@@ -1,11 +1,11 @@
 package com.home.education.mountains.service;
 
-import java.util.List;
+import java.util.Collection;
 
 import com.home.education.mountains.common.exception.LocationValidationFailedException;
 import com.home.education.mountains.resource.impl.Location;
 
 public interface LocationService extends ReadWriteGenericService<Location> {
 
-	List<Location> getByMountainRange(String mountainRange) throws LocationValidationFailedException;
+	Collection<Location> getAllFiltered(String mountainRange, String country) throws LocationValidationFailedException;
 }

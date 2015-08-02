@@ -27,19 +27,25 @@ public class MountainServiceImpl extends ReadWriteGenericServiceImpl<Mountain, M
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
 	public Mountain create(Mountain resource) throws ResourceException {
-		locationService.getById(resource.getLocationId());
+		validateResource(resource);
 		return super.create(resource);
 	}
 
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
-	public Mountain update(Mountain resource) {
+	public Mountain update(Mountain resource) throws ResourceException {
+		validateResource(resource);
 		return super.update(resource);
 	}
 	
 	@Override
 	protected void throwDoesNotExistsException(String msg) throws MountainDoesNotExistsException {
 		throw new MountainDoesNotExistsException(msg);
+	}
+
+	@Override
+	protected void validateResource(Mountain resource) throws ResourceException {
+		locationService.getById(resource.getLocationId());
 	}
 
 }
