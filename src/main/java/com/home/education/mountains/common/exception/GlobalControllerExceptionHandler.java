@@ -35,7 +35,13 @@ public class GlobalControllerExceptionHandler extends ResponseEntityExceptionHan
 		log.error(ex.getMessage(), ex);
 		return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
 	}
-
+	
+	@ExceptionHandler({ MountainValidationFailedException.class })
+	public ResponseEntity<Object> handleMountainValidation(MountainValidationFailedException ex) {
+		log.error(ex.getMessage(), ex);
+		return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+	}
+	
 	@ExceptionHandler({ ConstraintViolationException.class })
 	public ResponseEntity<Object> handleConstrainValidation(ConstraintViolationException ex) {
 		log.error(ex.getMessage(), ex);

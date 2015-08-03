@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.home.education.mountains.common.exception.MountainDoesNotExistsException;
+import com.home.education.mountains.common.exception.MountainValidationFailedException;
 import com.home.education.mountains.common.exception.ResourceException;
 import com.home.education.mountains.dao.MountainDao;
 import com.home.education.mountains.resource.impl.Mountain;
@@ -36,6 +37,16 @@ public class MountainServiceImpl extends ReadWriteGenericServiceImpl<Mountain, M
 	public Mountain update(Mountain resource) throws ResourceException {
 		validateResource(resource);
 		return super.update(resource);
+	}
+	
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
+	public Mountain delete(Mountain resource) throws ResourceException {
+		if(!resource.getRoutes().isEmpty()){
+			throw new MountainValidationFailedException("can't delete Muntain, first delete mapped routes");
+		}
+		resource.setRoutes(null);//FIXME 
+		return super.delete(resource);
 	}
 	
 	@Override

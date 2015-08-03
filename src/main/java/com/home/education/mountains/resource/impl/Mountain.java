@@ -66,7 +66,7 @@ public class Mountain extends GenericResourceImpl {
 	}
 
 	@OneToMany(mappedBy= "mountainId", fetch=FetchType.LAZY)
-	@Cascade({CascadeType.SAVE_UPDATE})
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DETACH})
 	public Set<Route> getRoutes() {
 		return routes;
 	}
