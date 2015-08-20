@@ -75,6 +75,20 @@
 			<artifactId>spring-orm</artifactId>
 			<version>${spring.framework.version}</version>
 		</dependency>
+		
+		<!-- Spring Security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		
 		<!-- logger -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
@@ -103,6 +117,7 @@
 		<finalName>Mountains</finalName>
 	</build>
 	<properties>
+		<spring.security.version>4.0.2.RELEASE</spring.security.version>
 		<spring.framework.version>4.1.7.RELEASE</spring.framework.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
    		<maven.compiler.target>1.8</maven.compiler.target>

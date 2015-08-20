@@ -25,6 +25,7 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Mountain extends GenericResourceImpl {
 
 	private static final long serialVersionUID = -5942986553948958078L;
+	
 	private int id;
 	@NotBlank(message = "MountainName cann't be empty")
 	@Length(max = 45, message = "MountainName cannot be greater than 45 characters")
