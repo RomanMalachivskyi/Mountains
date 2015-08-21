@@ -7,7 +7,8 @@
 	http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
 	<http auto-config="true">
-		<intercept-url pattern="/Mountains/location**" access="ROLE_USER" />
+		<intercept-url pattern="/Mountains/location" access="ROLE_USER" />
+		<logout/>
 	</http>
 
 	<authentication-manager>
