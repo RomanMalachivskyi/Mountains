@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 @Configuration
 @ComponentScan( {"com.home.education.mountains"})
-@Import({ SecurityConfig.class, HibernateConfiguration.class })
+@Import({SecurityConfig.class, HibernateConfiguration.class })
 public class AppConfig {
 
 }

@@ -75,7 +75,7 @@
 			<artifactId>spring-orm</artifactId>
 			<version>${spring.framework.version}</version>
 		</dependency>
-		
+
 		<!-- Spring Security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -88,7 +88,7 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>${spring.security.version}</version>
 		</dependency>
-		
+
 		<!-- logger -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
@@ -112,14 +112,30 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>2.3.3</version>
 		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>Mountains</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 	<properties>
 		<spring.security.version>4.0.2.RELEASE</spring.security.version>
 		<spring.framework.version>4.1.7.RELEASE</spring.framework.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
-   		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 </project>
