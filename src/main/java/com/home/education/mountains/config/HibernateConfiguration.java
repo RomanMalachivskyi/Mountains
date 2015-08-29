@@ -4,7 +4,6 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.hibernate.SessionFactory;
 import org.junit.experimental.categories.Categories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,8 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -34,7 +33,7 @@ public class HibernateConfiguration {
 	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
-		sessionFactory.setPackagesToScan(new String[] { "com.home.education.mountains.resource.implS" });
+		sessionFactory.setPackagesToScan(new String[] { "com.home.education.mountains" });
 		sessionFactory.setHibernateProperties(hibernateProperties());
 		sessionFactory.setAnnotatedClasses(Location.class, Mountain.class, Route.class, Categories.class);
 		return sessionFactory;
@@ -60,9 +59,9 @@ public class HibernateConfiguration {
 
 	@Bean
 	@Autowired
-	public HibernateTransactionManager transactionManager(SessionFactory s) {
-		HibernateTransactionManager txManager = new HibernateTransactionManager();
-		txManager.setSessionFactory(s);
+	public DataSourceTransactionManager transactionManager(DriverManagerDataSource dataSource) {
+		DataSourceTransactionManager txManager = new DataSourceTransactionManager();
+		txManager.setDataSource(dataSource);
 		return txManager;
 	}
 }

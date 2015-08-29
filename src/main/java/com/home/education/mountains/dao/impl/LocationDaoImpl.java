@@ -21,6 +21,7 @@ public class LocationDaoImpl extends ReadWriteGenericDaoImpl<Location> implement
 
 	@Override
 	public Collection<Location> getByMountainRange(String mountainRange) {
+		@SuppressWarnings("unchecked")
 		Collection<Location> result = (Collection<Location>) getHibernateTemplate().find("from Location where mountainRange=?", mountainRange);
 		LOG.info("get Locations by MountainRange:" + mountainRange + result.toString());
 		return result;
