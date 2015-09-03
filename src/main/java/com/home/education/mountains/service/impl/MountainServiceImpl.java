@@ -1,7 +1,6 @@
 package com.home.education.mountains.service.impl;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +16,7 @@ import com.home.education.mountains.dao.MountainDao;
 import com.home.education.mountains.resource.impl.Mountain;
 import com.home.education.mountains.service.LocationService;
 import com.home.education.mountains.service.MountainService;
+import com.home.education.mountains.service.common.MountainCommonService;
 
 @Service("mountainService")
 public class MountainServiceImpl extends ReadWriteGenericServiceImpl<Mountain, MountainDao>implements MountainService {
@@ -65,13 +65,7 @@ public class MountainServiceImpl extends ReadWriteGenericServiceImpl<Mountain, M
 
 	@Override
 	public Collection<Mountain> getFilteredMountains(Range<Integer> range) {
-		Collection<Mountain> result = getAll();
-		if(range != null && range.hasLowerBound() && range.hasUpperBound()){
-			result = result.stream().filter(m -> (m.getHeight() >= range.lowerEndpoint())).
-					filter(m -> (m.getHeight() <= range.upperEndpoint())).
-					collect(Collectors.toList());
-		}
-		return result;
+		return MountainCommonService.getFilteredMountains(getAll(), range);
 	}
 
 }
