@@ -29,7 +29,7 @@ public class CategoryServiceImpl extends ReadGenericServiceImpl<Category, Catego
 		}
 		Collection<Category> results = dao.getByName(categoryName);
 		if(results.isEmpty() || results.size() > 1){
-			throwDoesNotExistsException(" does not exists, or some shit in db");
+			throwDoesNotExistsException(" does not exists");
 		}
 		return Iterables.getOnlyElement(dao.getByName(categoryName));
 	}

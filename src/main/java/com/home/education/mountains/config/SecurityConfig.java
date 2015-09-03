@@ -2,7 +2,6 @@ package com.home.education.mountains.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,7 +23,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 	  http.httpBasic().and().authorizeRequests()
-		.antMatchers(HttpMethod.PUT,"/Mountains/location/**").access("hasRole('ROLE_ADMIN')")
+		//.antMatchers("/Mountains/location").access("hasRole('ROLE_USER')")
+		.antMatchers("/Mountains/category**").access("hasRole('ROLE_ADMIN')")
+		.antMatchers("/Mountains/mountain**").access("hasRole('ROLE_USER')")
+		.antMatchers("/Mountains/route**").access("hasRole('ROLE_USER')")
 		.and().csrf().disable();
 		//.antMatchers("/dba/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_DBA')")
 		//.and().formLogin();

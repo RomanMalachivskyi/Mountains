@@ -15,25 +15,21 @@ public class LogAspect {
 
 	private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
 
-	@Before("execution(* com.home.education.mountains.service.impl.ReadWriteGenericServiceImpl.*(..))")
+	@Before("execution(* com.home.education.mountains.service.impl.*.*(*))")
 	public void logBeforeWrite(JoinPoint joinPoint) {
 		buildMessage(joinPoint);
 	}
 
-	@Before("execution(* com.home.education.mountains.service.impl.ReadGenericServiceImpl.*(*))")
-	public void logBeforeRead(JoinPoint joinPoint) {
-		buildMessage(joinPoint);
-	}
-	
-	@Before("execution(* com.home.education.mountains.dao.impl.ReadGenericDaoImpl.*(*))")
+	@Before("execution(* com.home.education.mountains.dao.impl.*.*(*))")
 	public void logBeforeDaoRead(JoinPoint joinPoint) {
 		buildMessage(joinPoint);
 	}
-	
-	@Before("execution(* com.home.education.mountains.dao.impl.ReadWriteGenericDaoImpl.*(*))")
-	public void logBeforeDaoWrite(JoinPoint joinPoint) {
+
+	@Before("execution(* com.home.education.mountains.controller.*.*(*))")
+	public void logBeforeConrollers(JoinPoint joinPoint) {
 		buildMessage(joinPoint);
 	}
+	
 	private void buildMessage(JoinPoint joinPoint) {
 		StringBuilder builder = new StringBuilder();
 		builder.append(joinPoint.getSourceLocation().getWithinType().getSimpleName() + " ");

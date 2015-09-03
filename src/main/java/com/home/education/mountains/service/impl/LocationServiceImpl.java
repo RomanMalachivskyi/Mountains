@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.home.education.mountains.common.exception.LocationDoesNotExistsException;
 import com.home.education.mountains.common.exception.LocationValidationFailedException;
+import com.home.education.mountains.common.exception.MountainValidationFailedException;
 import com.home.education.mountains.common.exception.ResourceException;
 import com.home.education.mountains.dao.LocationDao;
 import com.home.education.mountains.resource.impl.Location;
@@ -42,16 +43,16 @@ public class LocationServiceImpl extends ReadWriteGenericServiceImpl<Location, L
 	}
 	
 	@Override
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)
 	public Location create(Location resource) throws ResourceException {
-		validateResource(resource);
+		validateLocation(resource);
 		return super.create(resource);
 	}
 
 	@Override
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)
 	public Location update(Location resource) throws ResourceException {
-		validateResource(resource);
+		validateLocation(resource);
 		return super.update(resource);
 	}
 	
@@ -61,7 +62,17 @@ public class LocationServiceImpl extends ReadWriteGenericServiceImpl<Location, L
 	}
 
 	@Override
-	protected void validateResource(Location resource) throws ResourceException {
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)
+	public Location delete(Location resource) throws ResourceException {
+		if(!resource.getMountains().isEmpty()){
+			throw new MountainValidationFailedException("can't delete Location, first delete mapped mountains");
+		}
+		resource.setMountains(null);//FIXME 
+		return super.delete(resource);
+	}
+	
+	@Override
+	protected void validateLocation(Location resource) throws ResourceException {
 		
 	}
 

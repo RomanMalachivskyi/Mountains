@@ -5,12 +5,13 @@ import com.home.education.mountains.dao.ReadWriteGenericDao;
 import com.home.education.mountains.resource.GenericResource;
 import com.home.education.mountains.service.ReadWriteGenericService;
 
-public abstract class ReadWriteGenericServiceImpl<R extends GenericResource, D extends ReadWriteGenericDao<R>> extends ReadGenericServiceImpl<R, ReadWriteGenericDao<R>> implements ReadWriteGenericService<R> {
-	
+public abstract class ReadWriteGenericServiceImpl<R extends GenericResource, D extends ReadWriteGenericDao<R>>
+		extends ReadGenericServiceImpl<R, ReadWriteGenericDao<R>>implements ReadWriteGenericService<R> {
+
 	public ReadWriteGenericServiceImpl(final D dao) {
 		super(dao);
 	}
-	
+
 	@Override
 	public R create(R resource) throws ResourceException {
 		return dao.create(resource);
@@ -20,11 +21,11 @@ public abstract class ReadWriteGenericServiceImpl<R extends GenericResource, D e
 	public R update(R resource) throws ResourceException {
 		return dao.update(resource);
 	}
-	
+
 	@Override
 	public R delete(R resource) throws ResourceException {
 		return dao.delete(resource);
 	}
-	
-	protected abstract void validateResource(R resource) throws ResourceException;
+
+	protected abstract void validateLocation(R resource) throws ResourceException;
 }

@@ -2,14 +2,14 @@ package com.home.education.mountains.controller;
 
 import java.util.Collection;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -20,26 +20,32 @@ import com.home.education.mountains.service.CategoryService;
 @Controller
 @RequestMapping("/category")
 public class CategoryController {
-	
-	private static final Logger log = LoggerFactory.getLogger(CategoryController.class);
 
 	@Autowired
 	private CategoryService categoryService;
 
-	@RequestMapping(value = "/{categoryName}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{categoryId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Category getByName(final @PathVariable String categoryName) throws ResourceException {
-		log.info("get Category by name");
-		Category category = categoryService.getByName(categoryName);
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	public Category getById(final @PathVariable int categoryId) throws ResourceException {
+		Category category = categoryService.getById(categoryId);
 		return category;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, params = {"categoryName"})
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	public Category getByName(@RequestParam(value = "categoryName", required = true) final String categoryName) throws ResourceException {
+		return categoryService.getByName(categoryName);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public Collection<Category> getAll() throws ResourceException {
-		log.info("get all categories");
 		Collection<Category> categories = categoryService.getAll();
 		return categories;
 	}

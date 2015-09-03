@@ -112,7 +112,7 @@ public class GlobalControllerExceptionHandler extends ResponseEntityExceptionHan
 	@ExceptionHandler({ AccessDeniedException.class })
 	public ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException ex) {
 		log.error("Access is denied: " + ex.getMessage(), ex);
-		return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
+		return new ResponseEntity<>("Access is denied", HttpStatus.FORBIDDEN);
 	}
 	
 
