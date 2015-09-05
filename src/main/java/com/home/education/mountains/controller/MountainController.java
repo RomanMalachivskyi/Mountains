@@ -2,6 +2,7 @@ package com.home.education.mountains.controller;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -47,12 +48,16 @@ public class MountainController {
 	public Collection<Mountain> getFilteredMountains(
 			@RequestParam(required = false, value = "minHeight", defaultValue = "0") int minHeight,
 			@RequestParam(required = false, value = "maxHeight", defaultValue = "8848") int maxHeight,
-			@RequestParam(required= false, value = "locationId") int ... locationIds) throws ResourceException{
-		if(minHeight < 0 || maxHeight > 8848){
+			@RequestParam(required = false, value = "locationId") int... locationIds) throws ResourceException {
+		if (minHeight < 0 || maxHeight > 8848) {
 			throw new ValidationFailedException("Invalid range for height");
 		}
 		Range<Integer> range = Range.openClosed(minHeight, maxHeight);
-		return mountainService.getFilteredMountains(range, Arrays.stream(locationIds).boxed().collect(Collectors.toList()));
+		Collection<Integer> locationIdsCollection = Collections.emptyList();
+		if (locationIds != null) {
+			locationIdsCollection = Arrays.stream(locationIds).boxed().collect(Collectors.toList());
+		}
+		return mountainService.getFilteredMountains(range, locationIdsCollection);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -79,5 +84,13 @@ public class MountainController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public Mountain delete(final @PathVariable int mountainId) throws ResourceException {
 		return mountainService.delete(mountainService.getById(mountainId));
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, params = {"mountainName"})
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	public Collection<Mountain> getByName(@RequestParam(value = "mountainName", required = true) final String mountainName) throws ResourceException {
+		return mountainService.getByName(mountainName);
 	}
 }

@@ -30,7 +30,13 @@ public class GlobalControllerExceptionHandler extends ResponseEntityExceptionHan
 		log.error(ex.getMessage(), ex);
 		return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
 	}
-
+	
+	@ExceptionHandler({ RouteValidationFailedException.class })
+	public ResponseEntity<Object> handleRouteValidation(RouteValidationFailedException ex) {
+		log.error(ex.getMessage(), ex);
+		return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+	}
+	
 	@ExceptionHandler({ CategoryValidationFailedException.class })
 	public ResponseEntity<Object> handleCategoryValidation(CategoryValidationFailedException ex) {
 		log.error(ex.getMessage(), ex);

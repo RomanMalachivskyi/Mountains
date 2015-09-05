@@ -6,8 +6,6 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.home.education.mountains.common.exception.LocationDoesNotExistsException;
@@ -18,6 +16,7 @@ import com.home.education.mountains.resource.impl.Location;
 import com.home.education.mountains.service.LocationService;
 
 @Service("locationService")
+@Transactional(rollbackFor = ResourceException.class)
 public class LocationServiceImpl extends ReadWriteGenericServiceImpl<Location, LocationDao>implements LocationService {
 
 	@Autowired
@@ -42,14 +41,12 @@ public class LocationServiceImpl extends ReadWriteGenericServiceImpl<Location, L
 	}
 
 	@Override
-	@Transactional(readOnly = false, rollbackFor = ResourceException.class, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)
 	public Location create(Location resource) throws ResourceException {
 		validateResource(resource);
 		return super.create(resource);
 	}
 
 	@Override
-	@Transactional(readOnly = false, rollbackFor = ResourceException.class, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)
 	public Location update(Location resource) throws ResourceException {
 		validateResource(resource);
 		return super.update(resource);
@@ -61,7 +58,6 @@ public class LocationServiceImpl extends ReadWriteGenericServiceImpl<Location, L
 	}
 
 	@Override
-	@Transactional(readOnly = false, rollbackFor = ResourceException.class, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)
 	public Location delete(Location resource) throws ResourceException {
 		return super.delete(resource);
 	}

@@ -28,15 +28,14 @@ public class CategoryServiceImpl extends ReadGenericServiceImpl<Category, Catego
 			throw new CategoryValidationFailedException("CategoryName is not valid");
 		}
 		Collection<Category> results = dao.getByName(categoryName);
-		if(results.isEmpty() || results.size() > 1){
+		if(results.isEmpty()){
 			throwDoesNotExistsException(" does not exists");
 		}
-		return Iterables.getOnlyElement(dao.getByName(categoryName));
+		return Iterables.getOnlyElement(results);
 	}
 
 	@Override
 	protected void throwDoesNotExistsException(String msg) throws CategoryDoesNotExistsException {
 		throw new CategoryDoesNotExistsException(msg);
 	}
-
 }

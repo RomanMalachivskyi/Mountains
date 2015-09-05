@@ -26,7 +26,7 @@ public class Route extends GenericResourceImpl {
 	@Length(max = 45, message = "RouteName cannot be greater than 45 characters")
 	private String name;
 	@Length(max = 100, message = "Description cannot be greater than 100 characters")
-	private String decription;
+	private String description;
 
 	@Column(name = "name", nullable = false)
 	public String getName() {
@@ -37,13 +37,13 @@ public class Route extends GenericResourceImpl {
 		this.name = name;
 	}
 
-	@Column(name = "decription")
-	public String getDecription() {
-		return decription;
+	@Column(name = "description")
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDecription(String decription) {
-		this.decription = decription;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Column(name="mountainId")
