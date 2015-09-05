@@ -1,22 +1,16 @@
 package com.home.education.mountains.resource.impl;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -35,7 +29,6 @@ public class Mountain extends GenericResourceImpl {
 	@Min(value = 0,  message = "the mountain cann't has a negative height, please verify your data")
 	@Max(value = 8848, message = "the highest peak has a height 8848, please verify your data")
 	private int height;
-	private Set<Route> routes; 
 	@NotNull(message = "Mountain should have connectivity with Location")
 	private int locationId; 
 	
@@ -64,16 +57,6 @@ public class Mountain extends GenericResourceImpl {
 
 	public void setHeight(int height) {
 		this.height = height;
-	}
-
-	@OneToMany(mappedBy= "mountainId", fetch=FetchType.LAZY)
-	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DETACH})
-	public Set<Route> getRoutes() {
-		return routes;
-	}
-
-	public void setRoutes(Set<Route> routes) {
-		this.routes = routes;
 	}
 
 	@Column(name = "locationId")

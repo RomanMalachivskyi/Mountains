@@ -32,5 +32,8 @@ public abstract class ReadGenericServiceImpl<R extends GenericResource, D extend
 	public Collection<R> getAll() {
 		return dao.getAll();
 	}
-
+	
+	protected boolean isValidIdentifier(int id) {
+		return (id != 0 && id > 0);
+	}
 }

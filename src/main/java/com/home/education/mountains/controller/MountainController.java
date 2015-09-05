@@ -1,6 +1,8 @@
 package com.home.education.mountains.controller;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -42,13 +44,15 @@ public class MountainController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public Collection<Mountain> getFilteredMountains(@RequestParam(required = false, value = "minHeight", defaultValue = "0") int minHeight,
-			@RequestParam(required = false, value = "maxHeight", defaultValue = "8848") int maxHeight) throws ResourceException{
+	public Collection<Mountain> getFilteredMountains(
+			@RequestParam(required = false, value = "minHeight", defaultValue = "0") int minHeight,
+			@RequestParam(required = false, value = "maxHeight", defaultValue = "8848") int maxHeight,
+			@RequestParam(required= false, value = "locationId") int ... locationIds) throws ResourceException{
 		if(minHeight < 0 || maxHeight > 8848){
 			throw new ValidationFailedException("Invalid range for height");
 		}
 		Range<Integer> range = Range.openClosed(minHeight, maxHeight);
-		return mountainService.getFilteredMountains(range);
+		return mountainService.getFilteredMountains(range, Arrays.stream(locationIds).boxed().collect(Collectors.toList()));
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

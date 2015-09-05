@@ -1,18 +1,11 @@
 package com.home.education.mountains.resource.impl;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -26,7 +19,6 @@ public class Category extends GenericResourceImpl{
 	private int id;
 	private String name;
 	private String description;
-	private List<Route> routes;
 
 	@Column(name = "name", unique = true, nullable = false)
 	public String getName() {
@@ -46,16 +38,6 @@ public class Category extends GenericResourceImpl{
 		this.description = description;
 	}
 
-	@OneToMany(mappedBy = "categoryId", fetch = FetchType.LAZY)
-	@Cascade({CascadeType.SAVE_UPDATE})
-	public List<Route> getRoutes() {
-		return routes;
-	}
-
-	public void setRoutes(List<Route> routes) {
-		this.routes = routes;
-	}
-	
 	@Override
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

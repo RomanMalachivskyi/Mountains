@@ -36,12 +36,12 @@ public class RouteServiceImpl extends ReadWriteGenericServiceImpl<Route, RouteDa
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
 	public Route create(Route resource) throws ResourceException {
-		validateLocation(resource);
+		validateResource(resource);
 		return super.create(resource);
 	}
 
 	@Override
-	protected void validateLocation(Route resource) throws ResourceException {
+	protected void validateResource(Route resource) throws ResourceException {
 		mountainService.getById(resource.getMountainId());
 		categoryService.getById(resource.getCategoryId());
 	}
@@ -49,7 +49,7 @@ public class RouteServiceImpl extends ReadWriteGenericServiceImpl<Route, RouteDa
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
 	public Route update(Route resource) throws ResourceException {
-		validateLocation(resource);
+		validateResource(resource);
 		return super.update(resource);
 	}
 

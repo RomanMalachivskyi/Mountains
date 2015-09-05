@@ -6,7 +6,7 @@ import com.home.education.mountains.resource.GenericResource;
 import com.home.education.mountains.service.ReadWriteGenericService;
 
 public abstract class ReadWriteGenericServiceImpl<R extends GenericResource, D extends ReadWriteGenericDao<R>>
-		extends ReadGenericServiceImpl<R, ReadWriteGenericDao<R>>implements ReadWriteGenericService<R> {
+		extends ReadGenericServiceImpl<R, D>implements ReadWriteGenericService<R> {
 
 	public ReadWriteGenericServiceImpl(final D dao) {
 		super(dao);
@@ -27,5 +27,5 @@ public abstract class ReadWriteGenericServiceImpl<R extends GenericResource, D e
 		return dao.delete(resource);
 	}
 
-	protected abstract void validateLocation(R resource) throws ResourceException;
+	protected abstract void validateResource(R resource) throws ResourceException;
 }

@@ -1,19 +1,12 @@
 package com.home.education.mountains.resource.impl;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.Valid;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -35,8 +28,8 @@ public class Location extends GenericResourceImpl {
 	private String country;
 	@Length(max = 100, message = "Description cann't be greater than 100 characters")
 	private String description;
-	@Valid
-	private List<Mountain> mountains;
+//	@Valid
+//	private List<Mountain> mountains;
 
 	public Location() {
 	}
@@ -74,15 +67,15 @@ public class Location extends GenericResourceImpl {
 		this.description = description;
 	};
 
-	@OneToMany( mappedBy = "locationId", fetch = FetchType.LAZY)
-	@Cascade({CascadeType.SAVE_UPDATE})
-	public List<Mountain> getMountains() {
-		return mountains;
-	}
-
-	public void setMountains(List<Mountain> mountains) {
-		this.mountains = mountains;
-	}
+//	@OneToMany( mappedBy = "locationId", fetch = FetchType.LAZY)
+//	@Cascade({CascadeType.SAVE_UPDATE})
+//	public List<Mountain> getMountains() {
+//		return mountains;
+//	}
+//
+//	public void setMountains(List<Mountain> mountains) {
+//		this.mountains = mountains;
+//	}
 
 	@Override
 	@Id

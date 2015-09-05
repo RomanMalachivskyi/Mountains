@@ -16,14 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.google.common.collect.Range;
 import com.home.education.mountains.common.exception.LocationValidationFailedException;
 import com.home.education.mountains.common.exception.ResourceException;
-import com.home.education.mountains.common.exception.ValidationFailedException;
 import com.home.education.mountains.resource.impl.Location;
-import com.home.education.mountains.resource.impl.Mountain;
 import com.home.education.mountains.service.LocationService;
-import com.home.education.mountains.service.common.MountainCommonService;
 
 @Controller
 @RequestMapping("/location")
@@ -68,32 +64,14 @@ public class LocationController {
 	public Location modify(@RequestBody final @Valid Location location, final @PathVariable int locationId)
 			throws ResourceException {
 		location.setId(locationId);
-		location.getMountains().stream().forEach(m -> m.setLocationId(locationId));
 		return locationService.update(location);
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{locationId}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public Location delete(@RequestBody final @Valid Location location) throws ResourceException {
-		return locationService.delete(location);
-	}
-	
-	@RequestMapping(value ="/{locationId}/mountain", method = RequestMethod.GET)
-	@ResponseStatus(HttpStatus.OK)
-	@ResponseBody
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public Collection<Mountain> getLocationMountainss(
-			final @PathVariable int locationId,
-			@RequestParam(required = false, value = "minHeight", defaultValue = "0") int minHeight,
-			@RequestParam(required = false, value = "maxHeight", defaultValue = "8848") int maxHeight)
-					throws ResourceException {
-		if(minHeight < 0 || maxHeight > 8848){
-			throw new ValidationFailedException("Invalid range for height");
-		}
-		Range<Integer> range = Range.openClosed(minHeight, maxHeight);
-		Location location = locationService.getById(locationId);
-		return MountainCommonService.getFilteredMountains(location.getMountains(), range);
+	public Location delete(final @PathVariable int locationId) throws ResourceException {
+		return locationService.delete(locationService.getById(locationId));
 	}
 }
