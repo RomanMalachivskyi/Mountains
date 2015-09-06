@@ -24,12 +24,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	  http.httpBasic().and().authorizeRequests()
 		//.antMatchers("/Mountains/location").access("hasRole('ROLE_USER')")
-		.antMatchers("/Mountains/category**").access("hasRole('ROLE_ADMIN')")
-		.antMatchers("/Mountains/mountain**").access("hasRole('ROLE_USER')")
-		.antMatchers("/Mountains/route**").access("hasRole('ROLE_USER')")
+		.antMatchers("/Mountains**").access("hasRole('ROLE_ADMIN')")
+		//.antMatchers("/Mountains/mountain**").access("hasRole('ROLE_USER')")
+		//.antMatchers("/Mountains/route**").access("hasRole('ROLE_USER')")
 		.and().csrf().disable();
-		//.antMatchers("/dba/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_DBA')")
-		//.and().formLogin();
 		
 	}
 }
