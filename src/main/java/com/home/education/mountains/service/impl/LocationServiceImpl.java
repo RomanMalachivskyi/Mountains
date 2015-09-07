@@ -25,7 +25,7 @@ public class LocationServiceImpl extends ReadWriteGenericServiceImpl<Location, L
 	}
 
 	@Override
-	public Collection<Location> getAllFiltered(String mountainRange, String country)
+	public Collection<Location> getAllLocationFilterByMountainRangeAndCountry(String mountainRange, String country)
 			throws LocationValidationFailedException {
 		Collection<Location> result = getAll();
 		if (StringUtils.isNotBlank(mountainRange)) {
@@ -40,6 +40,17 @@ public class LocationServiceImpl extends ReadWriteGenericServiceImpl<Location, L
 		return result;
 	}
 
+	@Override
+	public Collection<Location> getAllLocationFilterByMountainRange(String mountainRange) throws LocationValidationFailedException{
+		return getAllLocationFilterByMountainRangeAndCountry(mountainRange, null);
+	}
+	
+	@Override
+	public Collection<Location> getAllLocationFilterByContry(String country) throws LocationValidationFailedException {
+		return getAllLocationFilterByMountainRangeAndCountry(null, country);
+	}
+
+	
 	@Override
 	public Location create(Location resource) throws ResourceException {
 		validateResource(resource);
@@ -66,5 +77,4 @@ public class LocationServiceImpl extends ReadWriteGenericServiceImpl<Location, L
 	protected void validateResource(Location resource) throws ResourceException {
 
 	}
-
 }

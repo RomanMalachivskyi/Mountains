@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import com.google.common.collect.Lists;
 import com.home.education.mountains.dao.MountainDao;
 import com.home.education.mountains.resource.impl.Mountain;
 
@@ -27,8 +28,10 @@ public class MountainDaoImpl extends ReadWriteGenericDaoImpl<Mountain>implements
 	@Override
 	public Collection<Mountain> getViaLocationIds(Collection<Integer> locationIds) {
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-		if (locationIds != null && !locationIds.isEmpty())
-			mapSqlParameterSource.addValue("locationId", locationIds);
+		if (locationIds == null || locationIds.isEmpty()){
+			return Lists.newArrayList();
+		}
+		mapSqlParameterSource.addValue("locationId", locationIds);
 		return (Collection<Mountain>) getHibernateTemplate().find(buildSql(mapSqlParameterSource));
 	}
 }

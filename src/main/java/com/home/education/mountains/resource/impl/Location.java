@@ -28,8 +28,6 @@ public class Location extends GenericResourceImpl {
 	private String country;
 	@Length(max = 100, message = "Description cann't be greater than 100 characters")
 	private String description;
-//	@Valid
-//	private List<Mountain> mountains;
 
 	public Location() {
 	}
@@ -66,16 +64,6 @@ public class Location extends GenericResourceImpl {
 	public void setDescription(String description) {
 		this.description = description;
 	};
-
-//	@OneToMany( mappedBy = "locationId", fetch = FetchType.LAZY)
-//	@Cascade({CascadeType.SAVE_UPDATE})
-//	public List<Mountain> getMountains() {
-//		return mountains;
-//	}
-//
-//	public void setMountains(List<Mountain> mountains) {
-//		this.mountains = mountains;
-//	}
 
 	@Override
 	@Id

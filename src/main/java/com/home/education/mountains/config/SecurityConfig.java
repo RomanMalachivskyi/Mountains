@@ -17,17 +17,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		  auth.inMemoryAuthentication().withUser("roman").password("123456").roles("USER");
 		  auth.inMemoryAuthentication().withUser("admin").password("123456").roles("ADMIN");
+		  
 		}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
 	  http.httpBasic().and().authorizeRequests()
-		//.antMatchers("/Mountains/location").access("hasRole('ROLE_USER')")
 		.antMatchers("/Mountains**").access("hasRole('ROLE_ADMIN')")
-		//.antMatchers("/Mountains/mountain**").access("hasRole('ROLE_USER')")
-		//.antMatchers("/Mountains/route**").access("hasRole('ROLE_USER')")
-		.and().csrf().disable();
+		.and().csrf().disable().sessionManagement().enableSessionUrlRewriting(false);
 		
 	}
 }

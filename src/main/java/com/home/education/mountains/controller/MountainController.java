@@ -57,7 +57,7 @@ public class MountainController {
 		if (locationIds != null) {
 			locationIdsCollection = Arrays.stream(locationIds).boxed().collect(Collectors.toList());
 		}
-		return mountainService.getFilteredMountains(range, locationIdsCollection);
+		return mountainService.getAllFilterByLocationIdsAndHeight(locationIdsCollection, range);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

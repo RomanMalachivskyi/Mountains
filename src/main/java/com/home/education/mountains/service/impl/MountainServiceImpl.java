@@ -43,12 +43,6 @@ public class MountainServiceImpl extends ReadWriteGenericServiceImpl<Mountain, M
 	}
 
 	@Override
-	public Mountain delete(Mountain resource) throws ResourceException {
-
-		return super.delete(resource);
-	}
-
-	@Override
 	protected void throwDoesNotExistsException(String msg) throws MountainDoesNotExistsException {
 		throw new MountainDoesNotExistsException(msg);
 	}
@@ -59,18 +53,25 @@ public class MountainServiceImpl extends ReadWriteGenericServiceImpl<Mountain, M
 	}
 
 	@Override
-	public Collection<Mountain> getFilteredMountains(Range<Integer> range, Collection<Integer> locationIds) {
+	public Collection<Mountain> getAllFilterByLocationIdsAndHeight(Collection<Integer> locationIds, Range<Integer> rangeHeight) {
+		if (locationIds ==null || locationIds.isEmpty()) {
+			return filterByHeightRange(rangeHeight, getAll());
+		}
 		Collection<Mountain> result = getByLocationId(locationIds);
 		if (result == null || result.isEmpty()) {
 			return Lists.newArrayList();
 		}
-		if (range != null && range.hasLowerBound() && range.hasUpperBound()) {
-			result = result.stream().filter(m -> (m.getHeight() >= range.lowerEndpoint()))
-					.filter(m -> (m.getHeight() <= range.upperEndpoint())).collect(Collectors.toList());
+		return filterByHeightRange(rangeHeight, result);
+	}
+
+	private Collection<Mountain> filterByHeightRange(Range<Integer> rangeHeight, Collection<Mountain> result) {
+		if (rangeHeight != null && rangeHeight.hasLowerBound() && rangeHeight.hasUpperBound()) {
+			result = result.stream().filter(m -> (m.getHeight() >= rangeHeight.lowerEndpoint()))
+					.filter(m -> (m.getHeight() <= rangeHeight.upperEndpoint())).collect(Collectors.toList());
 		}
 		return result;
 	}
-
+	
 	@Override
 	public Collection<Mountain> getByLocationId(Collection<Integer> locationIds) {
 		return dao.getViaLocationIds(locationIds);

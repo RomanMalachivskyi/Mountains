@@ -46,7 +46,7 @@ public class LocationController {
 			@RequestParam(value = "mountainRange", required = false) final String mountainRange,
 			@RequestParam(value = "country", required = false) final String country)
 					throws LocationValidationFailedException {
-		return locationService.getAllFiltered(mountainRange, country);
+		return locationService.getAllLocationFilterByMountainRangeAndCountry(mountainRange, country);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

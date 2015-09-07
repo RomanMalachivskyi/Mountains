@@ -15,17 +15,17 @@ public class LogAspect {
 
 	private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
 
-	@Before("execution(* com.home.education.mountains.service.impl.*.*(*))")
+	@Before("execution(* com.home.education.mountains.service.impl.*.*(..))")
 	public void logBeforeWrite(JoinPoint joinPoint) {
 		buildMessage(joinPoint);
 	}
 
-	@Before("execution(* com.home.education.mountains.dao.impl.*.*(*))")
+	@Before("execution(* com.home.education.mountains.dao.impl.*.*(..))")
 	public void logBeforeDaoRead(JoinPoint joinPoint) {
 		buildMessage(joinPoint);
 	}
 
-	@Before("execution(* com.home.education.mountains.controller.*.*(*))")
+	@Before("execution(* com.home.education.mountains.controller.*.*(..))")
 	public void logBeforeConrollers(JoinPoint joinPoint) {
 		buildMessage(joinPoint);
 	}

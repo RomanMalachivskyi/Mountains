@@ -8,7 +8,7 @@ import com.home.education.mountains.resource.impl.Mountain;
 
 public interface MountainService extends ReadWriteGenericService<Mountain> {
 
-	Collection<Mountain> getFilteredMountains(Range<Integer> range, Collection<Integer> locationIds);
+	Collection<Mountain> getAllFilterByLocationIdsAndHeight(Collection<Integer> locationIds, Range<Integer> range);
 
 	Collection<Mountain> getByLocationId(Collection<Integer> locationIds);
 
