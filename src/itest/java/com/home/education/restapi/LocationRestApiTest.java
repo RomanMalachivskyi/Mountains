@@ -10,28 +10,53 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.home.education.mountains.config.AppConfig;
+import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.module.mockmvc.RestAssuredMockMvc;
-@Test
+
 @ContextConfiguration(classes = AppConfig.class)
 @WebAppConfiguration
-public class LocationRestApiTest  extends AbstractTestNGSpringContextTests {
+@Test
+public class LocationRestApiTest extends AbstractTestNGSpringContextTests {
 
 	@Autowired
 	private WebApplicationContext context;
 	
-	//@Test
-	public void locationGetById(){
+	@BeforeMethod
+	public void before(){
 		RestAssuredMockMvc.webAppContextSetup(context, springSecurity());
-		given().
-			postProcessors(httpBasic("username", "password")).
-			param("admin", "123456").
+		RestAssuredMockMvc.postProcessors(httpBasic("admin", "123456"));
+	}
+	
+	@Test
+	public void testLocationGetById(){
+		 given().
 		when().
-			get("Mountains/location/2").
+			get("location/2").
 		then().
 			statusCode(200).
-			body("location.id", equalTo(2));
+			body("id", equalTo(2));
 	}
+	
+	@Test
+	public void testCreateExistingLocation(){
+		String createLocation = "{\"mountainRange\":\"Karpaty\",\"country\":\"Ukraine\",\"description\":\"The highest mountains in Ukraine\"}";
+		given().
+			body(createLocation).contentType(ContentType.JSON).
+		when().
+			post("location").
+		then().
+			statusCode(422).
+		body(equalTo("Duplicate entry 'Karpaty-Ukraine' for key 'uq_location'"));
+			
+		}
+	
+	@AfterSuite
+    public void restRestAssured() {
+        RestAssuredMockMvc.reset();
+    }
 }
