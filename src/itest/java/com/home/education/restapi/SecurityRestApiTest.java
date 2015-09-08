@@ -10,63 +10,62 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.home.education.mountains.config.AppConfig;
 import com.jayway.restassured.http.ContentType;
-import com.jayway.restassured.module.mockmvc.RestAssuredMockMvc;
 
 @ContextConfiguration(classes = AppConfig.class)
 @WebAppConfiguration
 @Test
-public class LocationRestApiTest extends AbstractTestNGSpringContextTests {
+public class SecurityRestApiTest extends AbstractTestNGSpringContextTests {
 
 	@Autowired
 	private WebApplicationContext context;
 	
-	@BeforeMethod
-	public void before(){
-		RestAssuredMockMvc.webAppContextSetup(context, springSecurity());
-		RestAssuredMockMvc.postProcessors(httpBasic("admin", "123456"));
-	}
-	
 	@Test
-	public void testLocationGetById(){
+	public void testLocationWithotUser(){
 		given().
+			webAppContextSetup(context, springSecurity()).
 		when().
 			get("location/2").
 		then().
-			statusCode(200).
-			body("id", equalTo(2));
+			statusCode(403).
+			body(equalTo("Access is denied"));
 	}
 	
 	@Test
-	public void testCreateExistingLocation(){
-		String createLocation = "{\"mountainRange\":\"Karpaty\",\"country\":\"Ukraine\",\"description\":\"The highest mountains in Ukraine\"}";
+	public void testLocationWithInvalidUser(){
 		given().
-			body(createLocation).contentType(ContentType.JSON).
+			webAppContextSetup(context, springSecurity()).
+			postProcessors(httpBasic("bebebe", "bebebe")).
+		when().
+			get("location/2").
+		then().
+			statusCode(401);
+	}
+	
+	@Test
+	public void testLocationWithUser(){
+		given().
+			webAppContextSetup(context, springSecurity()).
+			postProcessors(httpBasic("roman", "123456")).
+		when().
+			get("location/2").
+		then().
+			statusCode(200);
+	}
+	
+	@Test
+	public void testLocationWithUserNotPermission(){
+		given().
+			webAppContextSetup(context, springSecurity()).
+			postProcessors(httpBasic("roman", "123456")).
+			contentType(ContentType.JSON).
 		when().
 			post("location").
 		then().
-			statusCode(422).
-			body(equalTo("Duplicate entry 'Karpaty-Ukraine' for key 'uq_location'"));
-			
+			statusCode(403).
+			body(equalTo("Access is denied"));
 	}
-	@Test
-	public void testGetLocationByFilter(){
-		given().
-			param("country", "Ukraine").param("mountainRange", "Karpaty").
-		when().
-			get("location").
-		then().
-			statusCode(200).
-			header("Content-Type", "application/json;charset=UTF-8");//.
-			
-	}
-	@AfterSuite
-    public void restRestAssured() {
-        RestAssuredMockMvc.reset();
-    }
 }
