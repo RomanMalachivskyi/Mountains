@@ -74,6 +74,9 @@ public class MountainServiceImpl extends ReadWriteGenericServiceImpl<Mountain, M
 	
 	@Override
 	public Collection<Mountain> getByLocationId(Collection<Integer> locationIds) {
+		if(locationIds == null || locationIds.isEmpty()){
+			return Lists.newArrayList();
+		}
 		return dao.getViaLocationIds(locationIds);
 	}
 	@Override

@@ -10,18 +10,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
-import org.testng.annotations.AfterTest;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.home.education.mountains.config.AppConfig;
-import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.module.mockmvc.RestAssuredMockMvc;
 
 @ContextConfiguration(classes = AppConfig.class)
 @WebAppConfiguration
 @Test
-public class SecurityRestApiTest extends AbstractTestNGSpringContextTests {
+public class CategoryRestApiTest extends AbstractTestNGSpringContextTests {
 
 	@Autowired
 	private WebApplicationContext context;
@@ -29,54 +28,31 @@ public class SecurityRestApiTest extends AbstractTestNGSpringContextTests {
 	@BeforeMethod
 	public void before(){
 		RestAssuredMockMvc.webAppContextSetup(context, springSecurity());
+		RestAssuredMockMvc.postProcessors(httpBasic("admin", "123456"));
 	}
 	
 	@Test
-	public void testLocationWithotUser(){
+	public void testCategoryGetById(){
 		given().
-			webAppContextSetup(context, springSecurity()).
 		when().
-			get("location/2").
+			get("category/1").
 		then().
-			statusCode(403).
-			body(equalTo("Access is denied"));
+			statusCode(200).
+			body("id", equalTo(1));
 	}
 	
 	@Test
-	public void testLocationWithInvalidUser(){
+	public void testGetategoryByName(){
 		given().
-			webAppContextSetup(context, springSecurity()).
-			postProcessors(httpBasic("bebebe", "bebebe")).
 		when().
-			get("location/2").
+			get("category?categoryName=2a").
 		then().
-			statusCode(401);
+			statusCode(200).
+			header("Content-Type", "application/json;charset=UTF-8").
+			body("name", equalTo("2a"));
+			
 	}
-	
-	@Test
-	public void testLocationWithUser(){
-		given().
-			webAppContextSetup(context, springSecurity()).
-			postProcessors(httpBasic("roman", "123456")).
-		when().
-			get("location/2").
-		then().
-			statusCode(200);
-	}
-	
-	@Test
-	public void testLocationWriteOperation(){
-		given().
-			webAppContextSetup(context, springSecurity()).
-			postProcessors(httpBasic("admin", "123456")).
-			contentType(ContentType.JSON).
-		when().
-			post("location").
-		then().
-			statusCode(400);
-	}
-	
-	@AfterTest
+	@AfterSuite
     public void restRestAssured() {
         RestAssuredMockMvc.reset();
     }

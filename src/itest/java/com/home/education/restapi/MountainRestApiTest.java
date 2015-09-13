@@ -10,7 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
-import org.testng.annotations.AfterTest;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -21,7 +21,7 @@ import com.jayway.restassured.module.mockmvc.RestAssuredMockMvc;
 @ContextConfiguration(classes = AppConfig.class)
 @WebAppConfiguration
 @Test
-public class SecurityRestApiTest extends AbstractTestNGSpringContextTests {
+public class MountainRestApiTest extends AbstractTestNGSpringContextTests {
 
 	@Autowired
 	private WebApplicationContext context;
@@ -29,54 +29,42 @@ public class SecurityRestApiTest extends AbstractTestNGSpringContextTests {
 	@BeforeMethod
 	public void before(){
 		RestAssuredMockMvc.webAppContextSetup(context, springSecurity());
+		RestAssuredMockMvc.postProcessors(httpBasic("admin", "123456"));
 	}
 	
 	@Test
-	public void testLocationWithotUser(){
+	public void testMountainGetById(){
 		given().
-			webAppContextSetup(context, springSecurity()).
 		when().
-			get("location/2").
+			get("mountain/2").
 		then().
-			statusCode(403).
-			body(equalTo("Access is denied"));
+			statusCode(200).
+			body("id", equalTo(2));
 	}
 	
 	@Test
-	public void testLocationWithInvalidUser(){
+	public void testCreateExistingMountain(){
+		String createMountain = "{\"name\":\"tempMountain\",\"height\":2060,\"locationId\":1}";
 		given().
-			webAppContextSetup(context, springSecurity()).
-			postProcessors(httpBasic("bebebe", "bebebe")).
+			body(createMountain).contentType(ContentType.JSON).
 		when().
-			get("location/2").
+			post("mountain").
 		then().
-			statusCode(401);
+			statusCode(422).
+			body(equalTo("Duplicate entry 'tempMountain-1' for key 'uq_mountain_name_in_location'"));
+			
 	}
-	
 	@Test
-	public void testLocationWithUser(){
+	public void testGetMountainByFilter(){
 		given().
-			webAppContextSetup(context, springSecurity()).
-			postProcessors(httpBasic("roman", "123456")).
 		when().
-			get("location/2").
+			get("mountain?minHeight=1000&maxHeight=8000&locationId=1,2,3,4").
 		then().
-			statusCode(200);
+			statusCode(200).
+			header("Content-Type", "application/json;charset=UTF-8");//.
+			
 	}
-	
-	@Test
-	public void testLocationWriteOperation(){
-		given().
-			webAppContextSetup(context, springSecurity()).
-			postProcessors(httpBasic("admin", "123456")).
-			contentType(ContentType.JSON).
-		when().
-			post("location").
-		then().
-			statusCode(400);
-	}
-	
-	@AfterTest
+	@AfterSuite
     public void restRestAssured() {
         RestAssuredMockMvc.reset();
     }

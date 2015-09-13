@@ -15,13 +15,13 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name="Mountain", uniqueConstraints={@UniqueConstraint(columnNames={"name"}, name="uq_mountain_name")})
+@Table(name="Mountain", uniqueConstraints={@UniqueConstraint(columnNames={"name", "locationId"}, name="uq_mountain_name_in_location")})
 public class Mountain extends GenericResourceImpl {
 
 	private static final long serialVersionUID = -5942986553948958078L;
 	
 	private int id;
-	@NotBlank(message = "MountainName cann't be empty")
+	@NotBlank(message = "name can't be empty")
 	@Length(max = 45, message = "MountainName cannot be greater than 45 characters")
 	private String name;
 	@Length(max = 100, message = "Description cannot be greater than 100 characters")
