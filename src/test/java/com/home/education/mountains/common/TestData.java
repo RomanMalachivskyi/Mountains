@@ -1,5 +1,6 @@
 package com.home.education.mountains.common;
 
+import com.google.common.collect.Range;
 import com.home.education.mountains.resource.impl.Category;
 import com.home.education.mountains.resource.impl.Location;
 import com.home.education.mountains.resource.impl.Mountain;
@@ -17,6 +18,9 @@ public class TestData {
 	public static final String ROUTE_NAME = "classic";
 	public static final int CATEGORY_ID = 3;
 	public static final String CATEGORY_NAME = "2a";
+	public static final int MAX_HEIGHT = 6000;
+	public static final int MIN_HEIGHT = 1000;
+	public static final Range<Integer> RANGE = Range.openClosed(MIN_HEIGHT, MAX_HEIGHT);
 
 	public static Location newLocation (int id){
 		Location location = new Location();

@@ -63,7 +63,17 @@ public class MountainServiceImpl extends ReadWriteGenericServiceImpl<Mountain, M
 		}
 		return filterByHeightRange(rangeHeight, result);
 	}
+	
+	@Override
+	public Collection<Mountain> getAllFilterByLocationIds(Collection<Integer> locationIds){
+		return getAllFilterByLocationIdsAndHeight(locationIds, null);
+	}
 
+	@Override
+	public Collection<Mountain> getAllFilterByHeight(Range<Integer> rangeHeight){
+		return getAllFilterByLocationIdsAndHeight(null, rangeHeight);
+	}
+	
 	private Collection<Mountain> filterByHeightRange(Range<Integer> rangeHeight, Collection<Mountain> result) {
 		if (rangeHeight != null && rangeHeight.hasLowerBound() && rangeHeight.hasUpperBound()) {
 			result = result.stream().filter(m -> (m.getHeight() >= rangeHeight.lowerEndpoint()))

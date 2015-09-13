@@ -13,4 +13,8 @@ public interface MountainService extends ReadWriteGenericService<Mountain> {
 	Collection<Mountain> getByLocationId(Collection<Integer> locationIds);
 
 	Collection<Mountain> getByName(String mountainName) throws ResourceException;
+
+	Collection<Mountain> getAllFilterByLocationIds(Collection<Integer> locationIds);
+
+	Collection<Mountain> getAllFilterByHeight(Range<Integer> rangeHeight);
 }

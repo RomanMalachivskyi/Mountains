@@ -23,7 +23,7 @@ import com.home.education.mountains.resource.impl.Route;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({ "com.home.education.mountains" })
-@PropertySource(value = { "classpath:properties/database.properties" })
+@PropertySource(value = { "classpath:properties/project.properties" })
 public class HibernateConfiguration {
 
 	@Autowired
