@@ -29,16 +29,19 @@ import com.home.education.mountains.service.MountainService;
 @RequestMapping("/mountain")
 public class MountainController {
 
+	private final MountainService mountainService;
+	
 	@Autowired
-	private MountainService mountainService;
+	public MountainController(final MountainService mountainService) {
+		this.mountainService = mountainService;
+	}
 
 	@RequestMapping(value = "/{mountainId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public Mountain getById(final @PathVariable int mountainId) throws ResourceException {
-		Mountain mountain = mountainService.getById(mountainId);
-		return mountain;
+		return mountainService.getById(mountainId);
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -85,12 +88,13 @@ public class MountainController {
 	public Mountain delete(final @PathVariable int mountainId) throws ResourceException {
 		return mountainService.delete(mountainService.getById(mountainId));
 	}
-	
-	@RequestMapping(method = RequestMethod.GET, params = {"mountainName"})
+
+	@RequestMapping(method = RequestMethod.GET, params = { "mountainName" })
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public Collection<Mountain> getByName(@RequestParam(value = "mountainName", required = true) final String mountainName) throws ResourceException {
+	public Collection<Mountain> getByName(
+			@RequestParam(value = "mountainName", required = true) final String mountainName) throws ResourceException {
 		return mountainService.getByName(mountainName);
 	}
 }

@@ -26,16 +26,19 @@ import com.home.education.mountains.service.LocationService;
 
 public class LocationController {
 
+	private final LocationService locationService;
+
 	@Autowired
-	private LocationService locationService;
+	public LocationController(LocationService locationService) {
+		this.locationService = locationService;
+	}
 
 	@RequestMapping(value = "/{locationId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public Location getById(final @PathVariable int locationId) throws ResourceException {
-		Location location = locationService.getById(locationId);
-		return location;
+		return locationService.getById(locationId);
 	}
 
 	@RequestMapping(method = RequestMethod.GET)

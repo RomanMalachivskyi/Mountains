@@ -21,6 +21,7 @@ public class TestData {
 	public static final int MAX_HEIGHT = 6000;
 	public static final int MIN_HEIGHT = 1000;
 	public static final Range<Integer> RANGE = Range.openClosed(MIN_HEIGHT, MAX_HEIGHT);
+	public static final int ROUTE_ID = 4;
 
 	public static Location newLocation (int id){
 		Location location = new Location();

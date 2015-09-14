@@ -27,8 +27,12 @@ import com.home.education.mountains.service.RouteService;
 @RequestMapping("/route")
 public class RouteController {
 
+	private final RouteService routeService;
+	
 	@Autowired
-	private RouteService routeService;
+	public RouteController(final RouteService routeService) {
+		this.routeService = routeService;
+	}
 
 	@RequestMapping(value = "/{routeId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)

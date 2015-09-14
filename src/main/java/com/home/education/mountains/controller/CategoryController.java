@@ -21,32 +21,35 @@ import com.home.education.mountains.service.CategoryService;
 @RequestMapping("/category")
 public class CategoryController {
 
+	private final CategoryService categoryService;
+
 	@Autowired
-	private CategoryService categoryService;
+	public CategoryController(final CategoryService categoryService) {
+		this.categoryService = categoryService;
+	}
 
 	@RequestMapping(value = "/{categoryId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public Category getById(final @PathVariable int categoryId) throws ResourceException {
-		Category category = categoryService.getById(categoryId);
-		return category;
+		return categoryService.getById(categoryId);
 	}
-	
-	@RequestMapping(method = RequestMethod.GET, params = {"categoryName"})
+
+	@RequestMapping(method = RequestMethod.GET, params = { "categoryName" })
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public Category getByName(@RequestParam(value = "categoryName", required = true) final String categoryName) throws ResourceException {
+	public Category getByName(@RequestParam(value = "categoryName", required = true) final String categoryName)
+			throws ResourceException {
 		return categoryService.getByName(categoryName);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public Collection<Category> getAll() throws ResourceException {
-		Collection<Category> categories = categoryService.getAll();
-		return categories;
+		return categoryService.getAll();
 	}
 }
