@@ -89,7 +89,7 @@ public class MountainControllerTest {
 		controller.getFilteredMountains(2, 9000, 1);
 	}
 	
-	@Test(expectedExceptions = ValidationFailedException.class)
+	@Test(expectedExceptions = IllegalArgumentException.class)
 	public void testGetAllFilteredInvalidRange() throws ResourceException{
 		controller.getFilteredMountains(4000, 2000, 1);
 	}

@@ -77,4 +77,5 @@ public class LocationController {
 	public Location delete(final @PathVariable int locationId) throws ResourceException {
 		return locationService.delete(locationService.getById(locationId));
 	}
+	
 }
